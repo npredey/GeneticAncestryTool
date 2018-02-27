@@ -1,4 +1,0 @@
-PLINK  -->  PlINK OUTPUT --> EIGENSTRAT --> PCA PLOT
-1. run comp_bio files through plink
-2. take PLINK files and run through EIGENSTRAT
-3. EIGENSTRAT creates PCA plot
