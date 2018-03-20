@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 
 
 def application():
@@ -9,9 +10,12 @@ def application():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--bfile', help='Specify .bed, .bim and .fam.', type=str)
-    parser.add_argument('--bmerge', help='Merge in a binary fileset.', type=str)
-    parser.add_argument('--make-bed', help='Make .bed, .fam and .bim.', type=str)
+    parser.add_argument('--bmerge', nargs='*', help='Merge in a binary fileset.', type=str) # '*'= ≥0 args, '+'= ≥1 args
+    parser.add_argument('--make-bed', help='Make .bed, .fam and .bim.', type=)
     parser.add_argument('--out', help='Specify output root filename.', type=str)
 
     args = parser.parse_args()
+    # cmd = 'plink --bfile Tutorial_Matrix --bmerge hapmap_CEU_r23a.bed hapmap_CEU_r23a.bim hapmap_CEU_r23a.fam --out ' \
+    #       'file_hapmap_merged'
+    # subprocess.run(cmd, shell=True)
     print(args)
