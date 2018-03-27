@@ -1,3 +1,5 @@
+# add bad id's from log to missnp file
+
 import sys
 from itertools import islice
 
