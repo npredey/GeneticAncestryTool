@@ -3,9 +3,6 @@
 import sys
 from itertools import islice
 
-log = open('/Users/andreagarretto/GeneticAncestryTool/parsing/log.txt', 'r')
-missnp = open('/Users/andreagarretto/GeneticAncestryTool/parsing/missnp.txt', 'a')
-
 def merge_log_to_missnp(logfile,missnpfile):
     missnpfile.write('\n')
     skipped = islice(logfile, 15, None) #start iterating after header
