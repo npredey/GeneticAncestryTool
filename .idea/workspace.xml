@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="7d0fbc59-6d0d-40a6-97eb-e5229bab49a5" name="Default" comment="" />
+=======
+    <list default="true" id="7d0fbc59-6d0d-40a6-97eb-e5229bab49a5" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+    </list>
+>>>>>>> 58f02ce8544880338bbda323c563f3924d175d10
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,8 +25,14 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
+<<<<<<< HEAD
               <first_editor relative-caret-position="90">
                 <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+=======
+              <first_editor relative-caret-position="105">
+                <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+
+>>>>>>> 58f02ce8544880338bbda323c563f3924d175d10
                 <folding />
               </first_editor>
               <second_editor />
@@ -30,6 +43,7 @@
       <file leaf-file-name="parsing_plink.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parsing/parsing_plink.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="345">
               <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
               <folding />
@@ -43,6 +57,13 @@
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+=======
+            <state relative-caret-position="217">
+              <caret line="26" column="104" lean-forward="false" selection-start-line="26" selection-start-column="104" selection-end-line="26" selection-end-column="104" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+>>>>>>> 58f02ce8544880338bbda323c563f3924d175d10
             </state>
           </provider>
         </entry>
@@ -382,23 +403,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/outline.txt" />
     <entry file="file://$PROJECT_DIR$/outline.txt" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/Cellar/python3/3.6.2/Frameworks/Python.framework/Versions/3.6/lib/python3.6/os.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
@@ -684,11 +688,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/wrapper.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="181">
           <caret line="64" column="21" lean-forward="false" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+=======
+        <state relative-caret-position="217">
+          <caret line="26" column="104" lean-forward="false" selection-start-line="26" selection-start-column="104" selection-end-line="26" selection-end-column="104" />
+>>>>>>> 58f02ce8544880338bbda323c563f3924d175d10
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="105">
+            <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
