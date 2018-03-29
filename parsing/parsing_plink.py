@@ -4,8 +4,18 @@ from itertools import islice
 
 
 def merge_log_to_missnp(logfile, missnpfile):
+    """
+    Takes in a .log file and a .missnp file and merges them together. There should be a separate output file of the
+    two files merged together.
+    :rtype: String: Filename of the merged log and missnp file.
+    :param logfile:
+    :param missnpfile:
+    """
     missnpfile.write('\n')
     # TODO Don't hard code this value as 15, as this number could change for different files.
+    # TODO Change the variable "skipped" to be more descriptive as to what is being skipped.
+    # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
+    # being.
     skipped = islice(logfile, 15, None)  # start iterating after header
     for line in skipped:
         id = line.split('rs', 1)[1]  # gets the snp id
