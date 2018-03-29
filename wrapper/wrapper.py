@@ -3,6 +3,7 @@ import subprocess
 import sys
 from parsing import parsing_plink
 
+
 def call_plink(plink_args):
     """
     Makes a system call to plink given an arg parse object for plink.
@@ -41,7 +42,8 @@ def application():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--bfile', help='Specify .bed, .bim and .fam.', type=str)
-    parser.add_argument('--bmerge', nargs='*', help='Merge in a binary fileset.', type=str) # '*'= ≥0 args, '+'= ≥1 args
+    parser.add_argument('--bmerge', nargs='*', help='Merge in a binary fileset.',
+                        type=str)  # '*'= ≥0 args, '+'= ≥1 args
     parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
     parser.add_argument('--out', help='Specify output root filename.', type=str)
 
@@ -54,8 +56,8 @@ def application():
     if args.bmerge is not None:
         args.bmerge = ' '.join(args.bmerge)
 
-    #args_dict = args.__dict__
-    #print(args_dict)
+    # args_dict = args.__dict__
+    # print(args_dict)
     # for k in args.__dict__:
     #     print(k, args.__dict__[k])
 
@@ -71,5 +73,5 @@ def application():
     initial_run_missnp = "{}.missnp".format(args.out)
 
     print("Merging initial .log file: [ {} ] with .missnip file: [ {} ]\n".format(inital_run_logfile,
-                                                                                 initial_run_missnp))
+                                                                                  initial_run_missnp))
     # parsing_plink.merge_log_to_missnp(inital_run_logfile, initial_run_missnp)
