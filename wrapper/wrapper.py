@@ -1,6 +1,7 @@
 import argparse
 import subprocess
-
+import sys
+from parsing import parsing_plink
 
 def call_plink(plink_args):
     """
@@ -45,15 +46,30 @@ def application():
     parser.add_argument('--out', help='Specify output root filename.', type=str)
 
     args = parser.parse_args()
-    args.bmerge = ' '.join(args.bmerge)
+
+    if len(sys.argv) == 1:
+        print(parser.print_help())
+        sys.exit()
+
+    if args.bmerge is not None:
+        args.bmerge = ' '.join(args.bmerge)
 
     #args_dict = args.__dict__
     #print(args_dict)
     # for k in args.__dict__:
     #     print(k, args.__dict__[k])
 
-    print('Running plink with args:')
+    print("Cleaning bim file {}.bim\n".format(args.bfile))
+    # parsing_plink.clean_bim()
+    print('Running PLINK with args:')
     for arg in vars(args):
         print('--' + arg + ' =', getattr(args, arg))
+    print()
 
     run_plink(commandline_args=args)
+    inital_run_logfile = "{}.log".format(args.out)
+    initial_run_missnp = "{}.missnp".format(args.out)
+
+    print("Merging initial .log file: [ {} ] with .missnip file: [ {} ]\n".format(inital_run_logfile,
+                                                                                 initial_run_missnp))
+    # parsing_plink.merge_log_to_missnp(inital_run_logfile, initial_run_missnp)
