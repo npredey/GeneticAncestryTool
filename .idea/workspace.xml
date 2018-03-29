@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d0fbc59-6d0d-40a6-97eb-e5229bab49a5" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/parsing/parsing_plink.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/GeneticAncestryTool.py" afterPath="$PROJECT_DIR$/GeneticAncestryTool.py" />
-      <change beforePath="$PROJECT_DIR$/parsing/parse.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/parsing/parse2.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/wrapper/wrapper.py" afterPath="$PROJECT_DIR$/wrapper/wrapper.py" />
-    </list>
+    <list default="true" id="7d0fbc59-6d0d-40a6-97eb-e5229bab49a5" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,10 +27,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parsing_plink.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parsing_plink.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parsing/parsing_plink.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
+            <state relative-caret-position="345">
               <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
               <folding />
             </state>
@@ -64,11 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wrapper.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wrapper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wrapper/wrapper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+            <state relative-caret-position="181">
+              <caret line="64" column="21" lean-forward="false" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -157,11 +150,6 @@
             <path>
               <item name="GeneticAncestryTool" type="b2602c69:ProjectViewProjectNode" />
               <item name="GeneticAncestryTool" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GeneticAncestryTool" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GeneticAncestryTool" type="462c0819:PsiDirectoryNode" />
-              <item name="parsing" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GeneticAncestryTool" type="b2602c69:ProjectViewProjectNode" />
@@ -670,14 +658,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/GeneticAncestryTool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.3/python_stubs/-1625016946/sys.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -686,21 +666,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/wrapper.py">
+    <entry file="file://$PROJECT_DIR$/parsing/parsing_plink.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="50" column="13" lean-forward="true" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="345">
+          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parsing/parsing_plink.py">
+    <entry file="file://$PROJECT_DIR$/GeneticAncestryTool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/wrapper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="64" column="21" lean-forward="false" selection-start-line="64" selection-start-column="21" selection-end-line="64" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
