@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from itertools import islice
+
 
 
 def merge_log_to_missnp(logfile, missnpfile):
