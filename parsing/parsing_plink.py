@@ -31,16 +31,22 @@ def clean_bim(bimfile_input, dataset, snp_ref):
     remove_dotIDs = {}
     remove_dotIDs['bfile'] = dataset
     remove_dotIDs['exclude-snps'] = '.'
+    remove_dotIDs['out']=dataset
+    remove_dotIDs['make-bed']=''
     wrapper.wrapper_util.call_plink(remove_dotIDs)
 
     snp_dict = {}
-    for line in snp_ref.readlines():
+    
+    snp_ref_r = open(snp_ref, 'r')
+    snp_ref_lines = snp_ref_r.readlines()
+    for line in snp_ref_lines:
         if '#' in line:  # if it's the header row
             continue
         row = line.split(',')
         snp_dict[row[1]] = row[2]  # add snpID and rsID to dictionary
-
-    bimfile_lines = bimfile_input.readlines()
+        
+    bimfile_input_r= open(bimfile_input,'r')
+    bimfile_lines = bimfile_input_r.readlines()
     good_snpID_output_file = open('snpID.txt', 'a')  # file to write out snpIDs that dont have an rsID
 
     for line in bimfile_lines:
