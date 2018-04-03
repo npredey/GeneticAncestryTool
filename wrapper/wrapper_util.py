@@ -1,4 +1,22 @@
 import os
+import subprocess
+
+
+def call_plink(plink_args):
+    """
+    Makes a system call to plink given a dictionary of arguments for plink.
+    :param plink_args:
+    """
+    plink_command = 'plink '
+    for arg, arg_value in plink_args:
+        # argument_value = getattr(plink_args, arg)
+        if arg_value is not None:
+            arg_as_plink_flag = '--{} {} '.format(arg, arg_value)
+            plink_command += arg_as_plink_flag
+        else:
+            plink_command += '--{} '.format(arg)
+
+    subprocess.run(plink_command, shell=True)
 
 
 def format_multiple_file_input(input_files_directory):

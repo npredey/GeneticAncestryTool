@@ -1,25 +1,7 @@
 import argparse
-import subprocess
 import sys
 from parsing import parsing_plink
-
-
-def call_plink(plink_args):
-    """
-    Makes a system call to plink given an arg parse object for plink.
-    :param plink_args:
-    """
-    plink_command = 'plink '
-    args_iterable = vars(plink_args)
-    for arg in args_iterable:
-        argument_value = getattr(plink_args, arg)
-        if argument_value is not None:
-            arg_as_plink_flag = '--{} {} '.format(arg, argument_value)
-            plink_command += arg_as_plink_flag
-        else:
-            plink_command += '--{} '.format(arg)
-
-    subprocess.run(plink_command, shell=True)
+from wrapper.wrapper_util import call_plink
 
 
 def run_plink(commandline_args):
@@ -29,7 +11,7 @@ def run_plink(commandline_args):
     it. It might become useful if we have to run eigenstrat from the command line. Not totally sure yet.
     :param commandline_args:
     """
-    if commandline_args.bmerge is not None:
+    if commandline_args['bmerge'] is not None:
         call_plink(commandline_args)
 
 
@@ -56,8 +38,8 @@ def application():
     if args.bmerge is not None:
         args.bmerge = ' '.join(args.bmerge)
 
-    # args_dict = args.__dict__
-    # print(args_dict)
+    args_dict = args.__dict__
+    print(args_dict)
     # for k in args.__dict__:
     #     print(k, args.__dict__[k])
 
@@ -68,7 +50,7 @@ def application():
         print('--' + arg + ' =', getattr(args, arg))
     print()
 
-    run_plink(commandline_args=args)
+    run_plink(commandline_args=args.__dict__)
     inital_run_logfile = "{}.log".format(args.out)
     initial_run_missnp = "{}.missnp".format(args.out)
 
