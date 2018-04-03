@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+import sys
+import os
+sys.path.append(os.path.dirname(os.getcwd()))
 
-from wrapper.wrapper_util import call_plink
 
+import wrapper.wrapper_util
 
 def merge_log_to_missnp(logfile, missnpfile):
     """
@@ -28,7 +31,7 @@ def clean_bim(bimfile_input, dataset, snp_ref):
     remove_dotIDs['bfile'] = dataset
     remove_dotIDs['exclude-snps'] = '.'
     call_plink(remove_dotIDs)
-    
+
     snp_dict = {}
     for line in snp_ref.readlines():
         if '#' in line:  # if it's the header row
@@ -48,7 +51,7 @@ def clean_bim(bimfile_input, dataset, snp_ref):
                 line[1] = snp_dict[split_line[1]]
 
     good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
-    
+
 bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset3.bim'
 dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset3'
 snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'

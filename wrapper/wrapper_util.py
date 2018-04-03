@@ -8,15 +8,26 @@ def call_plink(plink_args):
     :param plink_args:
     """
     plink_command = 'plink '
-    for arg, arg_value in plink_args:
+    for arg, arg_value in plink_args.items():
+        print(arg, arg_value)
         # argument_value = getattr(plink_args, arg)
         if arg_value is not None:
-            arg_as_plink_flag = '--{} {} '.format(arg, arg_value)
-            plink_command += arg_as_plink_flag
-        else:
-            plink_command += '--{} '.format(arg)
+            if arg_value != '':
+                arg_as_plink_flag = '--{} {} '.format(arg, arg_value)
+                plink_command += arg_as_plink_flag
+            else:
+                plink_command += '--{} '.format(arg)
 
+    print(plink_command)
     subprocess.run(plink_command, shell=True)
+
+
+def format_wrapper_args(args):
+    if args.bmerge is not None:
+        args.bmerge = ' '.join(args.bmerge)
+    if args.make_bed is not None:
+        args.make_bed = ''
+    return args
 
 
 def format_multiple_file_input(input_files_directory):
