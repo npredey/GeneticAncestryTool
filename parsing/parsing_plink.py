@@ -12,16 +12,14 @@ def merge_log_to_missnp(logfile, missnpfile):
     :param missnpfile:
     """
     missnpfile.write('\n')
-    # TODO Don't hard code this value as 15, as this number could change for different files.
-    # TODO Change the variable "skipped" to be more descriptive as to what is being skipped.
     # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
     # being.
-    skipped = islice(logfile, 15, None)  # start iterating after header
-    for line in skipped:
-        id = line.split('rs', 1)[1]  # gets the snp id
-        id = id.strip('\n')
-        id = id.strip("'.")
-        missnpfile.write('rs' + id + '\n')  # append to missnp file
+    for line in logfile:
+        if line.startswith('Warning:'):
+            id = line.split('rs', 1)[1]  # gets the snp id
+            id = id.strip('\n')
+            id = id.strip("'.")
+            missnpfile.write('rs' + id + '\n')  # append to missnp file
 
 
 def clean_bim(bimfile_input, dataset, snp_ref):
