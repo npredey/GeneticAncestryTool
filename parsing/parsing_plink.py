@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.getcwd()))
 
 import wrapper.wrapper_util
 
+
 def merge_log_to_missnp(logfile, missnpfile):
     """
     Takes in a .log file and a .missnp file and merges them together. There should be a separate output file of the
@@ -30,7 +31,7 @@ def clean_bim(bimfile_input, dataset, snp_ref):
     remove_dotIDs = {}
     remove_dotIDs['bfile'] = dataset
     remove_dotIDs['exclude-snps'] = '.'
-    call_plink(remove_dotIDs)
+    wrapper.wrapper_util.call_plink(remove_dotIDs)
 
     snp_dict = {}
     for line in snp_ref.readlines():
@@ -56,6 +57,6 @@ bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset3.bim'
 dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset3'
 snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
 
-clean_bim(bimfile_input,dataset,snp_ref)
+clean_bim(bimfile_input, dataset, snp_ref)
 
 
