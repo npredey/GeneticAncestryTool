@@ -31,7 +31,7 @@ def clean_bim(bimfile_input, dataset, snp_ref):
     remove_dotIDs = {}
     remove_dotIDs['bfile'] = dataset
     remove_dotIDs['exclude-snps'] = '.'
-    remove_dotIDs['out']=dataset
+    remove_dotIDs['out']=datasetout
     remove_dotIDs['make-bed']=''
     wrapper.wrapper_util.call_plink(remove_dotIDs)
 
