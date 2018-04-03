@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-
+from wrapper.wrapper_util import call_plink
 
 
 def merge_log_to_missnp(logfile, missnpfile):
