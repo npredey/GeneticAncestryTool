@@ -48,3 +48,11 @@ def clean_bim(bimfile_input, dataset, snp_ref):
                 line[1] = snp_dict[split_line[1]]
 
     good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
+    
+bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset3.bim'
+dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset3'
+snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
+
+clean_bim(bimfile_input,dataset,snp_ref)
+
+
