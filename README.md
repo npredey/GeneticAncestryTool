@@ -20,6 +20,6 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * `--out` _Specify output root filename._
 
 ## Running the application
-#####To run the main applcation (GeneticAncestryTool):
+##### To run the main applcation (GeneticAncestryTool):
 * Navigate to the top level directory `cd ../GeneticAncestryTool`
 * 
