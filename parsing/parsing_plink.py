@@ -24,7 +24,11 @@ def merge_log_to_missnp(logfile, missnpfile):
 
 def clean_bim(bimfile_input, dataset, snp_ref):
     # plink --bimfile dataset --snp .  #remove . id's from bimfile
-
+    remove_dotIDs = {}
+    remove_dotIDs[bfile] = dataset
+    remove_dotIDs[exclude-snps] = '.'
+    call_plink(remove_dotIDs)
+    
     snp_dict = {}
     for line in snp_ref.readlines():
         if '#' in line:  # if it's the header row
