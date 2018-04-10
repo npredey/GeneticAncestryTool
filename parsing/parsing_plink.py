@@ -77,4 +77,4 @@ dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
 snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
 
 clean_bim(bimfile_input, dataset, snp_ref)
-merge_log_to_missnp('dataset1')
+merge_log_to_missnp('/homes/hwheeler/Data/example_PLINK_files/dataset1')
