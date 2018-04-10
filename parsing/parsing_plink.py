@@ -18,7 +18,7 @@ def merge_log_to_missnp(output_file):
     """
     input_logfile = '{0}.log'.format(output_file)
     input_missnp = '{0}.missnp'.format(output_file)
-    merged_missnp_output = output_file + '_' + constants.MERGED_LOG_MISSNP + '.txt'
+    merged_missnp_output = output_file + '_' + "MERGED_LOG_MISSNP" + '.txt'
     merged_missnp_output_lines = list()
 
     with open(input_missnp, 'r') as missnp:
