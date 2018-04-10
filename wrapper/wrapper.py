@@ -40,7 +40,10 @@ def application():
     args_dict = args.__dict__
 
     print("Cleaning bim file {}.bim\n".format(args.bfile))
-    # parsing_plink.clean_bim()
+    input_bim = args.bfile + '.bim'
+    input_bed = args.bfile + '.bam'
+    input_fam = args.bfile + '.fam'
+    parsing_plink.clean_bim()
     print('Running PLINK with args:')
     for arg in vars(args):
         print('--' + arg + ' =', getattr(args, arg))

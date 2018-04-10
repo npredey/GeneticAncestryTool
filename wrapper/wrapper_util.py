@@ -30,6 +30,12 @@ def format_wrapper_args(args):
     return args
 
 
+def get_bfile_files(bfile):
+    filenames_dict = dict()
+    filenames_dict['bed'] = bfile + '.bed'
+
+
+
 def format_multiple_file_input(input_files_directory):
     """
     When merging multiple files, per http://zzz.bwh.harvard.edu/plink/dataman.shtml#mergelist, the files must be in the
