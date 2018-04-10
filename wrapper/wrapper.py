@@ -1,7 +1,7 @@
 import argparse
 import sys
 from parsing import parsing_plink
-from wrapper.wrapper_util import call_plink, format_wrapper_args
+from wrapper.wrapper_util import call_plink, format_wrapper_args, get_bed_bim_fam_from_bfile
 
 
 def run_plink(commandline_args):
@@ -28,6 +28,8 @@ def application():
                         type=str)  # '*'= ≥0 args, '+'= ≥1 args
     parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
     parser.add_argument('--out', help='Specify output root filename.', type=str)
+    parser.add_argument('--snp_ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
+    parser.add_argument('--no-web', help='PLINK arg to run without the internet.', type=bool)
 
     args = parser.parse_args()
 
@@ -38,22 +40,20 @@ def application():
     args = format_wrapper_args(args)
 
     args_dict = args.__dict__
+    input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
 
     print("Cleaning bim file {}.bim\n".format(args.bfile))
-    input_bim = args.bfile + '.bim'
-    input_bed = args.bfile + '.bam'
-    input_fam = args.bfile + '.fam'
-    parsing_plink.clean_bim()
+    parsing_plink.clean_bim(input_binary_files['bim'], args.bfile, args.snp_ref)
     print('Running PLINK with args:')
     for arg in vars(args):
         print('--' + arg + ' =', getattr(args, arg))
     print()
 
-    run_plink(commandline_args=args.__dict__)
+    run_plink(commandline_args=args_dict)
     inital_run_logfile = "{}.log".format(args.out)
     initial_run_missnp = "{}.missnp".format(args.out)
 
     print("Merging initial .log file: [ {} ] with .missnip file: [ {} ]\n".format(inital_run_logfile,
                                                                                   initial_run_missnp))
-    # parsing_plink.merge_log_to_missnp(inital_run_logfile, initial_run_missnp)
+    parsing_plink.merge_log_to_missnp(args.out)
 

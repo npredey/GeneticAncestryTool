@@ -27,14 +27,18 @@ def format_wrapper_args(args):
         args.bmerge = ' '.join(args.bmerge)
     if args.make_bed is not None:
         args.make_bed = ''
+    if args.no_web is not None:
+        args.no_web = ''
     return args
 
 
-def get_bfile_files(bfile):
+def get_bed_bim_fam_from_bfile(bfile):
     filenames_dict = dict()
     filenames_dict['bed'] = bfile + '.bed'
     filenames_dict['bim'] = bfile + '.bim'
     filenames_dict['fam'] = bfile + '.fam'
+    return filenames_dict
+
 
 def format_multiple_file_input(input_files_directory):
     """
@@ -47,7 +51,7 @@ def format_multiple_file_input(input_files_directory):
         fF.bed fF.bim fF.fam
         fG.bed fG.bim fG.fam
         fH.bed fH.bim fH.fam
-    where each corresponding *.bed, *.bim, and *.bam must together on a line in that specific order. This function
+    where each corresponding *.bed, *.bim, and *.fam must together on a line in that specific order. This function
     takes an input of a directory of files and returns a file output like the example above that will later be run
     through PLINK.
     :param input_files_directory:
