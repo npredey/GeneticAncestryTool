@@ -32,7 +32,7 @@ def application():
     parser.add_argument('--no-web', help='PLINK arg to run without the internet.', type=bool)
 
     args = parser.parse_args()
-
+    print("args: ", sys.argv)
     if len(sys.argv) == 1:
         print(parser.print_help())
         sys.exit()
