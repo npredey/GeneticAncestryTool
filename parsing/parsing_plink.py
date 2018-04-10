@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
-from constants import filename_constants
+import constants.filename_constants as constants
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
@@ -18,7 +18,7 @@ def merge_log_to_missnp(output_file):
     """
     input_logfile = '{0}.log'.format(output_file)
     input_missnp = '{0}.missnp'.format(output_file)
-    merged_missnp_output = output_file + '_' + filename_constants.MERGED_LOG_MISSNP + '.txt'
+    merged_missnp_output = output_file + '_' + constants.MERGED_LOG_MISSNP + '.txt'
     merged_missnp_output_lines = list()
 
     with open(input_missnp, 'r') as missnp:
