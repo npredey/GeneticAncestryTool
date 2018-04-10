@@ -76,4 +76,4 @@ bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'
 dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
 snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
 
-clean_bim(bimfile_input, dataset, snp_ref)
+# clean_bim(bimfile_input, dataset, snp_ref)
