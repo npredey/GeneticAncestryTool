@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import os
-import constants.filename_constants as constants
+# import constants.filename_constants as constants
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
