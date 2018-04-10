@@ -33,8 +33,8 @@ def format_wrapper_args(args):
 def get_bfile_files(bfile):
     filenames_dict = dict()
     filenames_dict['bed'] = bfile + '.bed'
-
-
+    filenames_dict['bim'] = bfile + '.bim'
+    filenames_dict['fam'] = bfile + '.fam'
 
 def format_multiple_file_input(input_files_directory):
     """

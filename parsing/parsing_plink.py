@@ -52,7 +52,7 @@ def clean_bim(bimfile_input, dataset, snp_ref):
                     or split_line[1] not in snp_dict.keys():
                 good_snpID_output_file.write(split_line[1] + '\n')
             else:  # replace snpID with rsID
-                line[1] = snp_dict[split_line[1]]
+                split_line[1] = snp_dict[split_line[1]]
 
     good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
 
