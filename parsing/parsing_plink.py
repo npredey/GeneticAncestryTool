@@ -24,7 +24,7 @@ def merge_log_to_missnp(output_file):
     with open(input_missnp, 'r') as missnp:
         merged_missnp_output_lines += missnp.readlines()
 
-    missnpfile.write('\n')
+    # missnpfile.write('\n')
     # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
     # being.
     with open(input_logfile, 'r') as logfile_in:
@@ -37,7 +37,7 @@ def merge_log_to_missnp(output_file):
 
     with open(merged_missnp_output, 'w+') as merged_output:
         for line in merged_missnp_output_lines:
-            merged_missnp_output.write(line)
+            merged_output.write(line)
 
 
 def clean_bim(bimfile_input, dataset, snp_ref):
