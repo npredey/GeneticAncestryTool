@@ -31,11 +31,12 @@ def merge_log_to_missnp(output_file):
     with open(input_logfile, 'r') as logfile_in:
         for line in logfile_in:
             if line.startswith('Warning:'):
-                id = re.search('rs[0-9]+', line).group(0)
-                # id = line.split('rs', 1)[1]  # gets the snp id
-                id = id.strip('\n')
-                id = id.strip("'.")
-                merged_missnp_output_lines.append(id + '\n')  # append to missnp file
+                rsId = re.search('rs[0-9]+', line).group(0)
+                if rsId:
+                    # id = line.split('rs', 1)[1]  # gets the snp id
+                    rsId = rsId.strip('\n')
+                    rsId = rsId.strip("'.")
+                    merged_missnp_output_lines.append(rsId + '\n')  # append to missnp file
 
     with open(merged_missnp_output, 'w+') as merged_output:
         for line in merged_missnp_output_lines:
