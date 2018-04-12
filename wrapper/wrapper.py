@@ -25,7 +25,7 @@ def application():
 
     parser.add_argument('--bfile', help='Specify .bed, .bim and .fam.', type=str)
     parser.add_argument('--bmerge', nargs='+', help='Merge in a binary fileset.',
-                        type=str)  # '*'= ≥0 args, '+'= ≥1 args
+                        type=str)  # '*'= greater than or equal to0 args, '+'= more than or equal to 1 args
     parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
     parser.add_argument('--out', help='Specify output root filename.', type=str)
     parser.add_argument('--snp_ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
