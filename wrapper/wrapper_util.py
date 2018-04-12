@@ -24,7 +24,7 @@ def call_plink(plink_args, command_key=''):
                 plink_command += '--{} '.format(arg)
 
     print(plink_command)
-    subprocess.run(plink_command, shell=True)
+    subprocess.call(plink_command, shell=True)
 
 
 def format_wrapper_args(args):
