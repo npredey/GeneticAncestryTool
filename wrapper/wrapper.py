@@ -12,7 +12,7 @@ def run_plink(commandline_args):
     :param commandline_args:
     """
     if commandline_args['bmerge'] is not None:
-        call_plink(commandline_args)
+        call_plink(commandline_args, 'performing merge')
 
 
 def application():
@@ -62,7 +62,7 @@ def application():
         'make-bed': '',
         'out': exclude_output_name
     }
-    call_plink(commandline_args=exclude_merged_missnp_log_args)
+    call_plink(plink_args=exclude_merged_missnp_log_args, command_key='Excluding merged log and *.missnp file')
 
     # --bfile dataset3_tmp --bmerge 1kg_phase1_all_dset3_tmp --make-bed --out dset3_merged_tmp
     final_merge_args = {
