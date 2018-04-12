@@ -42,14 +42,15 @@ def merge_log_to_missnp(output_file):
     with open(merged_missnp_output, 'w+') as merged_output:
         for line in merged_missnp_output_lines:
             merged_output.write(line)
+    return merged_missnp_output
 
 
 def clean_bim(bimfile_input, dataset, snp_ref):
     # plink --bimfile dataset --snp .  #remove . id's from bimfile
     remove_dotIDs = {'bfile': dataset, 'exclude-snps': '.', 'out': 'dataset_out', 'make-bed': ''}
-    wrapper.wrapper_util.call_plink(remove_dotIDs)
+    wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
 
-    snp_dict = {}
+    snp_dict = dict()
 
     if snp_ref is not None:
         snp_ref_r = open(snp_ref, 'r')

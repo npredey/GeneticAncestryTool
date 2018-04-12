@@ -2,11 +2,16 @@ import os
 import subprocess
 
 
-def call_plink(plink_args):
+def call_plink(plink_args, command_key=''):
     """
     Makes a system call to plink given a dictionary of arguments for plink.
+    :param command_key:
     :param plink_args:
     """
+    print('Running PLINK command [ {} ] with args:'.format(command_key))
+    for key, value in plink_args.items():
+        print('--' + key + ' =', value)
+    print()
     plink_command = 'plink '
     for arg, arg_value in plink_args.items():
         print(arg, arg_value)

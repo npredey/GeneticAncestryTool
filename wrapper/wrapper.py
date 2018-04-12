@@ -42,11 +42,8 @@ def application():
     input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
 
     print("Cleaning bim file {}.bim\n".format(args.bfile))
+
     parsing_plink.clean_bim(input_binary_files['bim'], args.bfile, args.snp_ref)
-    print('Running PLINK with args:')
-    for arg in vars(args):
-        print('--' + arg + ' =', getattr(args, arg))
-    print()
 
     run_plink(commandline_args=args_dict)
     inital_run_logfile = "{}.log".format(args.out)
@@ -54,5 +51,24 @@ def application():
 
     print("Merging initial .log file: [ {} ] with .missnip file: [ {} ]\n".format(inital_run_logfile,
                                                                                   initial_run_missnp))
-    parsing_plink.merge_log_to_missnp(args.out)
+    merged_missnp_log_filepath = parsing_plink.merge_log_to_missnp(args.out)
 
+    # plink --bfile 1kg_phase1_all --exclude dset3_merged-merge.missnp --make-bed --out 1kg_phase1_all_dset3_tmp
+
+    exclude_output_name = args.bfile + 'exc_missnp_log'
+    exclude_merged_missnp_log_args = {
+        'bfile': args.bfile,
+        'exclude': merged_missnp_log_filepath,
+        'make-bed': '',
+        'out': exclude_output_name
+    }
+    call_plink(commandline_args=exclude_merged_missnp_log_args)
+
+    # --bfile dataset3_tmp --bmerge 1kg_phase1_all_dset3_tmp --make-bed --out dset3_merged_tmp
+    final_merge_args = {
+        'bfile': exclude_output_name,
+        'bmerge': args.bmerge,
+        'make-bed': '',
+        'out': exclude_output_name + 'final_result'
+    }
+    run_plink(final_merge_args)
