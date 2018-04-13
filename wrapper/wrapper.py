@@ -23,13 +23,13 @@ def application():
     """
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--bfile', help='Specify .bed, .bim and .fam.', type=str)
+    parser.add_argument('--bfile', help='Specify .bed, .bim and .fam.', type=str, required=True)
     parser.add_argument('--bmerge', nargs='+', help='Merge in a binary fileset.',
                         type=str)  # '*'= greater than or equal to0 args, '+'= more than or equal to 1 args
     parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
-    parser.add_argument('--out', help='Specify output root filename.', type=str)
+    parser.add_argument('--out', help='Specify output root filename.', type=str, required=True)
     parser.add_argument('--snp_ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
-    parser.add_argument('--no-web', help='PLINK arg to run without the internet.', type=bool)
+    parser.add_argument('--noweb', help='PLINK arg to run without the internet.', action='store_true')
 
     args = parser.parse_args()
     if len(sys.argv) == 1:
@@ -39,11 +39,13 @@ def application():
     args = format_wrapper_args(args)
 
     args_dict = args.__dict__
-    input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
+    print(args_dict)
+    if args.bfile:
+        input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
 
-    print("Cleaning bim file {}.bim\n".format(args.bfile))
+        print("Cleaning bim file {}.bim\n".format(args.bfile))
 
-    parsing_plink.clean_bim(input_binary_files['bim'], args.bfile, args.snp_ref)
+        parsing_plink.clean_bim(input_binary_files['bim'], args.bfile, args.snp_ref)
 
     run_plink(commandline_args=args_dict)
     inital_run_logfile = "{}.log".format(args.out)

@@ -22,26 +22,34 @@ def merge_log_to_missnp(output_file):
     merged_missnp_output = output_file + '_' + "MERGED_LOG_MISSNP" + '.txt'
     merged_missnp_output_lines = list()
 
-    with open(input_missnp, 'r') as missnp:
-        merged_missnp_output_lines += missnp.readlines()
+    try:
+        with open(input_missnp, 'r') as missnp:
+            merged_missnp_output_lines += missnp.readlines()
+    except FileNotFoundError:
+        print('.missnp file [ {} ] does not exist. Excluding from merge...'.format(input_missnp))
+
 
     # missnpfile.write('\n')
     # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
     # being.
-    with open(input_logfile, 'r') as logfile_in:
-        for line in logfile_in:
-            if line.startswith('Warning:'):
-                rs_id = re.search('rs[0-9]+', line)
-                if rs_id:
-                    rs_id = rs_id.group(0)
-                    # id = line.split('rs', 1)[1]  # gets the snp id
-                    rs_id = rs_id.strip('\n')
-                    rs_id = rs_id.strip("'.")
-                    merged_missnp_output_lines.append(rs_id + '\n')  # append to missnp file
+    try:
+        with open(input_logfile, 'r') as logfile_in:
+            for line in logfile_in:
+                if line.startswith('Warning:'):
+                    rs_id = re.search('rs[0-9]+', line)
+                    if rs_id:
+                        rs_id = rs_id.group(0)
+                        # id = line.split('rs', 1)[1]  # gets the snp id
+                        rs_id = rs_id.strip('\n')
+                        rs_id = rs_id.strip("'.")
+                        merged_missnp_output_lines.append(rs_id + '\n')  # append to missnp file
+    except FileNotFoundError:
+        print('Log file [ {} ] does not exist. ')
 
     with open(merged_missnp_output, 'w+') as merged_output:
-        for line in merged_missnp_output_lines:
-            merged_output.write(line)
+            for line in merged_missnp_output_lines:
+                merged_output.write(line)
+
     return merged_missnp_output
 
 
@@ -77,9 +85,9 @@ def clean_bim(bimfile_input, dataset, snp_ref):
         good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
 
 
-bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'
-dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
-snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
-
-clean_bim(bimfile_input, dataset, snp_ref)
-merge_log_to_missnp('/homes/agarretto/results_dset1_phase1_all/merged_data')
+# bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'
+# dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
+# snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
+#
+# clean_bim(bimfile_input, dataset, snp_ref)
+# merge_log_to_missnp('/homes/agarretto/results_dset1_phase1_all/merged_data')

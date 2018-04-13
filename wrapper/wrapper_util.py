@@ -32,8 +32,8 @@ def format_wrapper_args(args):
         args.bmerge = ' '.join(args.bmerge)
     if args.make_bed is not None:
         args.make_bed = ''
-    if args.no_web is not None:
-        args.no_web = ''
+    if args.noweb is not None:
+        args.noweb = ''
     return args
 
 
