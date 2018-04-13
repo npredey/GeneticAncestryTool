@@ -13,21 +13,23 @@ def merge_log_to_missnp(output_file):
     """
     Takes in a .log file and a .missnp file and merges them together. There should be a separate output file of the
     two files merged together.
-    :rtype: String: Filename of the merged log and missnp file.
-    :param logfile:
-    :param missnpfile:
+    :return: The name of the merged files, or an empty string if the log file and a .missnp file is not present.
+    :rtype: String
+    :param output_file: The output flag passed in as a command line argument.
     """
     input_logfile = '{0}.log'.format(output_file)
     input_missnp = '{0}.missnp'.format(output_file)
     merged_missnp_output = output_file + '_' + "MERGED_LOG_MISSNP" + '.txt'
     merged_missnp_output_lines = list()
+    missing_logfile = False
+    missing_missnp_file = False
 
     try:
         with open(input_missnp, 'r') as missnp:
             merged_missnp_output_lines += missnp.readlines()
     except FileNotFoundError:
+        missing_missnp_file = True
         print('.missnp file [ {} ] does not exist. Excluding from merge...'.format(input_missnp))
-
 
     # missnpfile.write('\n')
     # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
@@ -36,7 +38,7 @@ def merge_log_to_missnp(output_file):
         with open(input_logfile, 'r') as logfile_in:
             for line in logfile_in:
                 if line.startswith('Warning:'):
-                    rs_id = re.search('rs[0-9]+', line)
+                    rs_id = re.search('rs[0-9]+', line)  # regular expression to grab rsID's
                     if rs_id:
                         rs_id = rs_id.group(0)
                         # id = line.split('rs', 1)[1]  # gets the snp id
@@ -44,16 +46,26 @@ def merge_log_to_missnp(output_file):
                         rs_id = rs_id.strip("'.")
                         merged_missnp_output_lines.append(rs_id + '\n')  # append to missnp file
     except FileNotFoundError:
-        print('Log file [ {} ] does not exist. ')
+        print('Log file [ {} ] does not exist. '.format(input_logfile))
+        missing_logfile = True
 
-    with open(merged_missnp_output, 'w+') as merged_output:
-            for line in merged_missnp_output_lines:
-                merged_output.write(line)
-
-    return merged_missnp_output
+    if missing_missnp_file and missing_logfile:
+        return ''
+    else:
+        with open(merged_missnp_output, 'w+') as merged_output:
+                for line in merged_missnp_output_lines:
+                    merged_output.write(line)
+        return merged_missnp_output
 
 
 def clean_bim(bimfile_input, dataset, snp_ref):
+    """
+    "Cleans" a .bim file by excluding rsID's that have '.' as an identifier. If there is a snp reference file to
+    change SNP ID's to rsID's, then this function will also perform that as well.
+    :param bimfile_input: The .bim file to be cleaned.
+    :param dataset: The binary file as a parameter from the command line argument.
+    :param snp_ref: The SNP reference file that converts SNP ID's to rsID's
+    """
     # plink --bimfile dataset --snp .  #remove . id's from bimfile
     remove_dotIDs = {'bfile': dataset, 'exclude-snps': '.', 'out': 'dataset_out', 'make-bed': ''}
     wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')

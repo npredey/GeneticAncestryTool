@@ -64,7 +64,11 @@ def application():
         'make-bed': '',
         'out': exclude_output_name
     }
-    call_plink(plink_args=exclude_merged_missnp_log_args, command_key='Excluding merged log and *.missnp file')
+    call_plink(plink_args=exclude_merged_missnp_log_args, command_key='Excluding merged log and *.missnp file from '
+                                                                      'dataset')
+    exclude_merged_missnp_log_args['bfile'] = args.bmerge
+    call_plink(plink_args=exclude_merged_missnp_log_args, command_key='Excluding merged log and *.missnp file from '
+                                                                      'HapMap')
 
     # --bfile dataset3_tmp --bmerge 1kg_phase1_all_dset3_tmp --make-bed --out dset3_merged_tmp
     final_merge_args = {
