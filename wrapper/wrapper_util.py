@@ -1,5 +1,14 @@
 import os
 import subprocess
+import logging
+
+
+def get_root_path(path):
+    return '/'.join(path.split('/')[:-1]) + '/'
+
+
+def get_filename(path):
+    return path.split('/')[-1]
 
 
 def call_plink(plink_args, command_key=''):
@@ -8,30 +17,41 @@ def call_plink(plink_args, command_key=''):
     :param command_key:
     :param plink_args:
     """
-    print('Running PLINK command [ {} ] with args:'.format(command_key))
+    run_logging_string = 'Running PLINK command [ {} ] with args:'.format(command_key)
+    print('\n', '*' * len(run_logging_string), '\n', run_logging_string)
     for key, value in plink_args.items():
         print('--' + key + ' =', value)
     print()
     plink_command = 'plink '
     for arg, arg_value in plink_args.items():
-        print(arg, arg_value)
+        # print(arg, arg_value)
         # argument_value = getattr(plink_args, arg)
         if arg_value is not None:
             if arg_value != '':
+                if 'bmerge' == arg:
+                    arg_value = list(get_bed_bim_fam_from_bfile(arg_value).values())
+                    arg_value.sort()
+                    arg_value = ' '.join(arg_value)
+                elif 'bfile' == arg:
+                    arg_value = '{} {}'.format(arg_value, '--make-bed')
                 arg_as_plink_flag = '--{} {} '.format(arg, arg_value)
                 plink_command += arg_as_plink_flag
             else:
                 plink_command += '--{} '.format(arg)
 
     print(plink_command)
-    subprocess.call(plink_command, shell=True)
+    try:
+        subprocess.check_output(plink_command, shell=True)
+    except subprocess.CalledProcessError as e:
+        print(logging.exception("Error running plink while [ {} ]".format(command_key)))
+        print(e.output)
 
 
 def format_wrapper_args(args):
     if args.bmerge is not None:
         args.bmerge = ' '.join(args.bmerge)
-    if args.make_bed is not None:
-        args.make_bed = ''
+    # if args.make_bed is not None:
+    #     args.make_bed = ''
     if args.noweb is not None:
         args.noweb = ''
     return args

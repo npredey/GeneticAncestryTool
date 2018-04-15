@@ -2,7 +2,8 @@
 import sys
 import os
 import re
-# import constants.filename_constants as constants
+import constants.filename_constants as constants
+from wrapper.wrapper_util import get_root_path, get_filename
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
@@ -17,9 +18,13 @@ def merge_log_to_missnp(output_file):
     :rtype: String
     :param output_file: The output flag passed in as a command line argument.
     """
-    input_logfile = '{0}.log'.format(output_file)
-    input_missnp = '{0}.missnp'.format(output_file)
-    merged_missnp_output = output_file + '_' + "MERGED_LOG_MISSNP" + '.txt'
+    print(constants.MERGED_LOG_MISSNP)
+    output_file_root_dir = get_root_path(output_file)
+    output_file_name = get_filename(output_file)
+
+    input_logfile = '{}.log'.format(output_file)
+    input_missnp = '{}.missnp'.format(output_file)
+    merged_missnp_output = '{}_{}'.format(output_file, 'MERGED_LOG_MISSNP.txt')
     merged_missnp_output_lines = list()
     missing_logfile = False
     missing_missnp_file = False
@@ -49,7 +54,7 @@ def merge_log_to_missnp(output_file):
         print('Log file [ {} ] does not exist. '.format(input_logfile))
         missing_logfile = True
 
-    if missing_missnp_file and missing_logfile:
+    if (missing_missnp_file and missing_logfile) or len(merged_missnp_output_lines) < 1:
         return ''
     else:
         with open(merged_missnp_output, 'w+') as merged_output:
@@ -58,18 +63,44 @@ def merge_log_to_missnp(output_file):
         return merged_missnp_output
 
 
-def clean_bim(bimfile_input, dataset, snp_ref):
+def remove_dots_from_dataset(dataset):
     """
-    "Cleans" a .bim file by excluding rsID's that have '.' as an identifier. If there is a snp reference file to
-    change SNP ID's to rsID's, then this function will also perform that as well.
+    Removes '.' from the binary file input.
+    :rtype: str
+    :param dataset: The path to the .bed .bim .fam files whose '.' as rsIDs to be removed.
+    """
+    root_path = wrapper.wrapper_util.get_root_path(dataset)
+    dataset_filename = wrapper.wrapper_util.get_filename(dataset)
+
+    output_file = '{}{}_{}'.format(root_path, dataset_filename, 'NO_DOTS')
+    temp_snpfile = 'dotfile_temp.txt'
+    temp_file = open(temp_snpfile, 'w+')
+    temp_file.write('.')
+    temp_file.close()
+
+    # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file, 'make-bed': ''}
+    remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file}
+    wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
+    os.remove(temp_snpfile)
+    return output_file
+
+
+def clean_bim(bimfile_input, snp_ref):
+    """
+    "Cleans" a .bim file by swapping
     :param bimfile_input: The .bim file to be cleaned.
     :param dataset: The binary file as a parameter from the command line argument.
     :param snp_ref: The SNP reference file that converts SNP ID's to rsID's
     """
     # plink --bimfile dataset --snp .  #remove . id's from bimfile
-    remove_dotIDs = {'bfile': dataset, 'exclude-snps': '.', 'out': 'dataset_out', 'make-bed': ''}
-    wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
-
+    # temp_snpfile = 'clean_bim_temp.txt'
+    # temp_file = open(temp_snpfile, 'w+')
+    # temp_file.write('.')
+    # temp_file.close()
+    #
+    # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': 'dataset_out', 'make-bed': ''}
+    # wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
+    # os.remove(temp_snpfile)
     snp_dict = dict()
 
     if snp_ref is not None:
@@ -96,10 +127,10 @@ def clean_bim(bimfile_input, dataset, snp_ref):
 
         good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
 
-
-bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'
-dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
-snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
-
-clean_bim(bimfile_input, dataset, snp_ref)
-merge_log_to_missnp('/homes/agarretto/results_dset1_phase1_all/merged_data')
+#
+# bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'
+# dataset = '/homes/hwheeler/Data/example_PLINK_files/dataset1'
+# snp_ref = '/homes/hwheeler/Data/example_PLINK_files/GenomeWideSNP_6.na35.annot.csv'
+#
+# clean_bim(bimfile_input, dataset, snp_ref)
+# merge_log_to_missnp('/homes/agarretto/results_dset1_phase1_all/merged_data')
