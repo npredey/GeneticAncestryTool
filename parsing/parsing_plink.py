@@ -22,7 +22,8 @@ def merge_log_to_missnp(output_file):
     output_file_root_dir = get_root_path(output_file)
     output_file_name = get_filename(output_file)
 
-    input_logfile = '{}.log'.format(output_file)
+    input_logfile = '{}.log'.format(output_file).replace('//', '/')
+    print('this is the input logfile', input_logfile)
     input_missnp = '{}.missnp'.format(output_file)
     merged_missnp_output = '{}_{}'.format(output_file, 'MERGED_LOG_MISSNP.txt')
     merged_missnp_output_lines = list()
