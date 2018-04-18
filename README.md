@@ -29,6 +29,12 @@ git clone https://github.com/npredey/GeneticAncestryTool.git
 git fork https://github.com/npredey/GeneticAncestryTool.git
 ~~~
 
+# Scripts 
+* `parsing_plink.py`
+* `GeneticAncestryTool.py`
+* `wrapper.py`
+* `util.py`
+
 ## Running the application
 ##### To run the main applcation (GeneticAncestryTool):
 * Navigate to the top level directory `cd ../GeneticAncestryTool`

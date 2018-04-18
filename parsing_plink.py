@@ -3,11 +3,11 @@ import sys
 import os
 import re
 import constants.filename_constants as constants
-from wrapper.wrapper_util import get_root_path, get_filename
+from util import get_root_path, get_filename
 
 sys.path.append(os.path.dirname(os.getcwd()))
 
-import wrapper.wrapper_util
+import util
 
 
 def merge_log_to_missnp(output_file):
@@ -70,8 +70,8 @@ def remove_dots_from_dataset(dataset):
     :rtype: str
     :param dataset: The path to the .bed .bim .fam files whose '.' as rsIDs to be removed.
     """
-    root_path = wrapper.wrapper_util.get_root_path(dataset)
-    dataset_filename = wrapper.wrapper_util.get_filename(dataset)
+    root_path = util.get_root_path(dataset)
+    dataset_filename = util.get_filename(dataset)
 
     output_file = '{}{}_{}'.format(root_path, dataset_filename, 'NO_DOTS')
     temp_snpfile = 'dotfile_temp.txt'
@@ -81,7 +81,7 @@ def remove_dots_from_dataset(dataset):
 
     # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file, 'make-bed': ''}
     remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file}
-    wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
+    util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
     os.remove(temp_snpfile)
     return output_file
 

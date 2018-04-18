@@ -1,7 +1,7 @@
 import argparse
 import sys
-from parsing import parsing_plink
-from wrapper.wrapper_util import *
+import parsing_plink
+from util import *
 import logging
 
 
@@ -50,6 +50,8 @@ def application():
 
     logging.log(logging.INFO, "Extracting '.'s from [ {} ] files\n".format(args.bfile))
     bfile_NO_DOTS = parsing_plink.remove_dots_from_dataset(args.bfile)
+    
+    # hapmap_NO_DOTS = parsing_plink.remo
 
     no_dots_binary_files = get_bed_bim_fam_from_bfile(bfile_NO_DOTS)
     logging.log(logging.INFO, "Cleaning bim file {}.bim\n".format(args.bfile))
