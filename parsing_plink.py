@@ -64,7 +64,7 @@ def merge_log_to_missnp(output_file):
         return merged_missnp_output
 
 
-def remove_dots_from_dataset(dataset):
+def get_rsIDs_from_dataset(dataset):
     """
     Removes '.' from the binary file input.
     :rtype: str
@@ -72,17 +72,36 @@ def remove_dots_from_dataset(dataset):
     """
     root_path = util.get_root_path(dataset)
     dataset_filename = util.get_filename(dataset)
+    temp_extract_file = 'extract.txt'
 
-    output_file = '{}{}_{}'.format(root_path, dataset_filename, 'NO_DOTS')
-    temp_snpfile = 'dotfile_temp.txt'
-    temp_file = open(temp_snpfile, 'w+')
-    temp_file.write('.')
-    temp_file.close()
+    output_file = '{}{}_{}'.format(root_path, dataset_filename, 'RS_ONLY')
+    output_lines = set()
+    with open(dataset, 'r') as input_file:
+        for line in input_file.readlines():
+            if '.' not in line and not line.startswith('MT'):
+                rs_id = re.search('rs[0-9]+', line)
+                if rs_id:
+                    rs_id = rs_id.group(0).strip()
+                    output_lines.add(rs_id + '\n')
 
-    # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file, 'make-bed': ''}
-    remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file}
-    util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
-    os.remove(temp_snpfile)
+    with open(temp_extract_file, 'w+') as output:
+        for line in output_lines:
+            output.write(line)
+
+    get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file, 'make-bed': '', 'out': output_file}
+    util.call_plink(get_rs_ids_command, command_key='Exclude . SNPs')
+    return output_file
+
+    # temp_snpfile = 'dotfile_temp.txt'
+    # temp_file = open(temp_snpfile, 'w+')
+    # temp_file.write('.')
+    # temp_file.close()
+    #
+    #
+    # # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file, 'make-bed': ''}
+    # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file}
+    # util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
+    # os.remove(temp_snpfile)
     return output_file
 
 

@@ -48,35 +48,33 @@ def application():
     # input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
     # print(input_binary_files)
 
-    logging.log(logging.INFO, "Extracting '.'s from [ {} ] files\n".format(args.bfile))
-    bfile_NO_DOTS = parsing_plink.remove_dots_from_dataset(args.bfile)
-    
-    # hapmap_NO_DOTS = parsing_plink.remo
+    logging.log(logging.INFO, "Extracting only rsID's from [ {} ] files\n".format(args.bfile))
+    bfile_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bfile)
 
-    no_dots_binary_files = get_bed_bim_fam_from_bfile(bfile_NO_DOTS)
+    only_rsID_binary_files = get_bed_bim_fam_from_bfile(bfile_only_rsID)
     logging.log(logging.INFO, "Cleaning bim file {}.bim\n".format(args.bfile))
-    parsing_plink.clean_bim(no_dots_binary_files['bim'], args.snp_ref)
+    # parsing_plink.clean_bim(only_rsID_binary_files['bim'], args.snp_ref)
 
-    args_dict['bfile'] = bfile_NO_DOTS
-    call_plink(plink_args=args_dict, command_key='First Merge after clean and removing dots')
+    args_dict['bfile'] = bfile_only_rsID
+    call_plink(plink_args=args_dict, command_key='First Merge after clean and extracting rsIDs')
     inital_run_logfile = "{}.log".format(args.out)
     initial_run_missnp = "{}.missnp".format(args.out)
 
     print("Merging initial .log file: [ {} ] with .missnip file: [ {} ]\n".format(inital_run_logfile,
                                                                                   initial_run_missnp))
-    args_out_full_path = '{}/{}'.format(get_root_path(args.bfile), args.out)
+    args_out_full_path = '{}{}'.format(get_root_path(args.bfile), args.out)
     merged_missnp_log_filepath = parsing_plink.merge_log_to_missnp(args_out_full_path)
 
     # plink --bfile 1kg_phase1_all --exclude dset3_merged-merge.missnp --make-bed --out 1kg_phase1_all_dset3_tmp
 
-    no_dots_bfile_output_name_after_exclude = '{}{}'.format(bfile_NO_DOTS, 'exc_missnp_log')
-    hapmap_output_after_exclude = '{}{}'.format(args.bmerge, 'exc_missnp_log')
+    rsID_only_bfile_output_name_after_exclude = '{}_{}'.format(bfile_only_rsID, 'exc_missnp_log')
+    hapmap_output_after_exclude = '{}_{}'.format(args.bmerge, 'exc_missnp_log')
     if merged_missnp_log_filepath:  # output name is blank so we will not exclude it from the files
         exclude_merged_missnp_log_args = {
             'bfile': args.bfile,
             'exclude': merged_missnp_log_filepath,
             # 'make-bed': '',
-            'out': no_dots_bfile_output_name_after_exclude
+            'out': rsID_only_bfile_output_name_after_exclude
         }
 
         call_plink(plink_args=exclude_merged_missnp_log_args, command_key='Excluding merged log and *.missnp file from '
@@ -88,7 +86,7 @@ def application():
 
         # --bfile dataset3_tmp --bmerge 1kg_phase1_all_dset3_tmp --make-bed --out dset3_merged_tmp
         final_merge_args = {
-            'bfile': no_dots_bfile_output_name_after_exclude,
+            'bfile': rsID_only_bfile_output_name_after_exclude,
             'bmerge': hapmap_output_after_exclude,
             # 'make-bed': '',
             'out': args.out
