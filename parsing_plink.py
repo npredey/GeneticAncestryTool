@@ -66,7 +66,7 @@ def get_rsIDs_from_dataset(dataset):
     root_path = util.get_root_path(dataset)
     dataset_filename = util.get_filename(dataset)
     dataset_bim = util.get_bed_bim_fam_from_bfile(dataset)['bim']
-    temp_extract_file = 'extract.txt'
+    temp_extract_file = 'extract_{}.txt'.format(dataset_filename)
 
     output_file = '{}{}_{}'.format(root_path, dataset_filename, 'RS_ONLY')
     output_lines = set()

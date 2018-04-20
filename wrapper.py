@@ -49,12 +49,14 @@ def application():
 
     logging.log(logging.INFO, "Extracting only rsID's from [ {} ] files\n".format(args.bfile))
     bfile_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bfile)
+    bmerge_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bmerge)
 
     only_rsID_binary_files = get_bed_bim_fam_from_bfile(bfile_only_rsID)
     logging.log(logging.INFO, "Cleaning bim file {}.bim\n".format(args.bfile))
     # parsing_plink.clean_bim(only_rsID_binary_files['bim'], args.snp_ref)
 
     args_dict['bfile'] = bfile_only_rsID
+    args_dict['bmerge'] = bmerge_only_rsID
     call_plink(plink_args=args_dict, command_key='First Merge after clean and extracting rsIDs')
     inital_run_logfile = "{}.log".format(args.out)
     initial_run_missnp = "{}.missnp".format(args.out)
