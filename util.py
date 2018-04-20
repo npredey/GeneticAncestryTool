@@ -47,9 +47,12 @@ def call_plink(plink_args, command_key=''):
         print(e.output)
 
 
-def format_wrapper_args(args):
-    if args.bmerge is not None:
-        args.bmerge = ' '.join(args.bmerge)
+def validate_wrapper_args(args, parent_dir):
+    if args.bfile == 'sample_data/dataset_sample' and ''.join(args.bmerge) == 'sample_data/hapmap_sample':
+        args.bfile = os.path.join(parent_dir, args.bfile)
+        args.bmerge = os.path.join(parent_dir, args.bmerge)
+        args.out = os.path.join(parent_dir, args.out)
+
     # if args.make_bed is not None:
     #     args.make_bed = ''
     if args.noweb is not None:
@@ -58,6 +61,7 @@ def format_wrapper_args(args):
 
 
 def get_bed_bim_fam_from_bfile(bfile):
+    print('bfile', bfile)
     filenames_dict = dict()
     filenames_dict['bed'] = bfile + '.bed'
     filenames_dict['bim'] = bfile + '.bim'

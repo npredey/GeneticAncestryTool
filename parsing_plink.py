@@ -1,13 +1,7 @@
-#!/usr/bin/env python
-import sys
-import os
+#!/usr/bin/env python3
 import re
-import constants.filename_constants as constants
-from util import get_root_path, get_filename
-
-sys.path.append(os.path.dirname(os.getcwd()))
-
 import util
+import os
 
 
 def merge_log_to_missnp(output_file):
@@ -18,13 +12,12 @@ def merge_log_to_missnp(output_file):
     :rtype: String
     :param output_file: The output flag passed in as a command line argument.
     """
-    print(constants.MERGED_LOG_MISSNP)
-    output_file_root_dir = get_root_path(output_file)
-    output_file_name = get_filename(output_file)
+    output_file_root_dir = util.get_root_path(output_file)
+    output_file_name = util.get_filename(output_file)
 
-    input_logfile = '{}.log'.format(output_file).replace('//', '/')
-    print('this is the input logfile', input_logfile)
+    input_logfile = '{}.log'.format(output_file)
     input_missnp = '{}.missnp'.format(output_file)
+
     merged_missnp_output = '{}_{}'.format(output_file, 'MERGED_LOG_MISSNP.txt')
     merged_missnp_output_lines = list()
     missing_logfile = False
@@ -72,11 +65,12 @@ def get_rsIDs_from_dataset(dataset):
     """
     root_path = util.get_root_path(dataset)
     dataset_filename = util.get_filename(dataset)
+    dataset_bim = util.get_bed_bim_fam_from_bfile(dataset)['bim']
     temp_extract_file = 'extract.txt'
 
     output_file = '{}{}_{}'.format(root_path, dataset_filename, 'RS_ONLY')
     output_lines = set()
-    with open(dataset, 'r') as input_file:
+    with open(dataset_bim, 'r') as input_file:
         for line in input_file.readlines():
             if '.' not in line and not line.startswith('MT'):
                 rs_id = re.search('rs[0-9]+', line)
@@ -88,8 +82,10 @@ def get_rsIDs_from_dataset(dataset):
         for line in output_lines:
             output.write(line)
 
-    get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file, 'make-bed': '', 'out': output_file}
-    util.call_plink(get_rs_ids_command, command_key='Exclude . SNPs')
+    get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file,
+                          'out': output_file, 'noweb': ''}
+    util.call_plink(get_rs_ids_command, command_key='Get only rsIDs from input .bim file [ {} ]'.format(dataset_filename))
+    os.remove(temp_extract_file)
     return output_file
 
     # temp_snpfile = 'dotfile_temp.txt'

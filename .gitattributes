@@ -1,3 +1,0 @@
-*.bed filter=lfs diff=lfs merge=lfs -text
-*.bim filter=lfs diff=lfs merge=lfs -text
-*.fam filter=lfs diff=lfs merge=lfs -text
