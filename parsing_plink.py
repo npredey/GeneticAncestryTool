@@ -85,7 +85,7 @@ def get_rsIDs_from_dataset(dataset):
     get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file,
                           'out': output_file, 'noweb': ''}
     util.call_plink(get_rs_ids_command, command_key='Get only rsIDs from input .bim file [ {} ]'.format(dataset_filename))
-    os.remove(temp_extract_file)
+    # os.remove(temp_extract_file)
     return output_file
 
     # temp_snpfile = 'dotfile_temp.txt'
@@ -98,7 +98,6 @@ def get_rsIDs_from_dataset(dataset):
     # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': output_file}
     # util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
     # os.remove(temp_snpfile)
-    return output_file
 
 
 def clean_bim(bimfile_input, snp_ref):
