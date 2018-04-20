@@ -30,6 +30,7 @@ def call_plink(plink_args, command_key=''):
             if arg_value != '':
                 if 'bmerge' == arg:
                     arg_value = list(get_bed_bim_fam_from_bfile(arg_value).values())
+                    print(arg_value)
                     arg_value.sort()
                     arg_value = ' '.join(arg_value)
                 elif 'bfile' == arg:
