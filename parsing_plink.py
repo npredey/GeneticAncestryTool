@@ -17,7 +17,7 @@ def merge_log_to_missnp(output_file):
     output_file_name = util.get_filename(output_file)
 
     input_logfile = '{}.log'.format(output_file)
-    input_missnp = '{}.missnp'.format(output_file)
+    input_missnp = '{}-merge.missnp'.format(output_file)
 
     merged_missnp_output = '{}_{}'.format(output_file, 'MERGED_LOG_MISSNP.txt')
     merged_missnp_output_lines = list()
@@ -82,7 +82,7 @@ def get_rsIDs_from_dataset(dataset):
     with open(temp_extract_file, 'w+') as output:
         for line in output_lines:
             output.write(line)
-    collections.OrderedDict
+
     get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file,
                           'out': output_file}
     util.call_plink(get_rs_ids_command, command_key='Get only rsIDs from input .bim file [ {} ]'.format(dataset_filename))
