@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import re
 import util
+import collections
 import os
 
 
@@ -81,9 +82,9 @@ def get_rsIDs_from_dataset(dataset):
     with open(temp_extract_file, 'w+') as output:
         for line in output_lines:
             output.write(line)
-
+    collections.OrderedDict
     get_rs_ids_command = {'bfile': dataset, 'extract': temp_extract_file,
-                          'out': output_file, 'noweb': ''}
+                          'out': output_file}
     util.call_plink(get_rs_ids_command, command_key='Get only rsIDs from input .bim file [ {} ]'.format(dataset_filename))
     # os.remove(temp_extract_file)
     return output_file

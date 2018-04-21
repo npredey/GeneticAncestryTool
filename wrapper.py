@@ -31,8 +31,9 @@ def application():
                         type=str)  # '*'= greater than or equal to 0 args, '+'= more than or equal to 1 args
     # parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
     parser.add_argument('--out', help='Specify output root filename.', type=str, required=True)
-    parser.add_argument('--snp_ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
+    parser.add_argument('--snp-ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
     parser.add_argument('--noweb', help='PLINK arg to run without the internet.', action='store_true')
+    # parser.add_argument('--num-rsid', help='Flag for extracting a set amount of rsIDs from the dataset')
 
     args = parser.parse_args()
 
