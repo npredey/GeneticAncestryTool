@@ -87,3 +87,9 @@ merged_sample_data.fam
 merged_sample_data.log
 merged_sample_data.nosex
 ~~~
+
+## Output
+* Like the example above, the ouput of the files will include:
+    * `.bed`, `.bim`, `.fam` files of the following datasets:
+        * Genotype and HapMap data with only rs ID's (.."_RS_ONLY")
+        * 
