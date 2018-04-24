@@ -58,9 +58,10 @@ def merge_log_to_missnp(output_file):
         return merged_missnp_output
 
 
-def get_rsIDs_from_dataset(dataset):
+def get_rsIDs_from_dataset(dataset, num_rsids):
     """
     Removes '.' from the binary file input.
+    :param num_rsids: The number of rsids to extract from the datasets
     :rtype: str
     :param dataset: The path to the .bed .bim .fam files whose '.' as rsIDs to be removed.
     """
@@ -72,7 +73,11 @@ def get_rsIDs_from_dataset(dataset):
     output_file = '{}{}_{}'.format(root_path, dataset_filename, 'RS_ONLY')
     output_lines = set()
     with open(dataset_bim, 'r') as input_file:
-        for line in input_file.readlines():
+        file_lines = input_file.readlines()
+        if num_rsids > 0:
+            file_lines = file_lines[:num_rsids]
+        for line in file_lines:
+            print(line)
             if '.' not in line and not line.startswith('MT'):
                 rs_id = re.search('rs[0-9]+', line)
                 if rs_id:
@@ -108,15 +113,8 @@ def clean_bim(bimfile_input, snp_ref):
     :param dataset: The binary file as a parameter from the command line argument.
     :param snp_ref: The SNP reference file that converts SNP ID's to rsID's
     """
-    # plink --bimfile dataset --snp .  #remove . id's from bimfile
-    # temp_snpfile = 'clean_bim_temp.txt'
-    # temp_file = open(temp_snpfile, 'w+')
-    # temp_file.write('.')
-    # temp_file.close()
-    #
-    # remove_dotIDs = {'bfile': dataset, 'exclude': temp_snpfile, 'out': 'dataset_out', 'make-bed': ''}
-    # wrapper.wrapper_util.call_plink(remove_dotIDs, command_key='Exclude . SNPs')
-    # os.remove(temp_snpfile)
+
+    root_directory = util.get_root_path(bimfile_input)
     snp_dict = dict()
 
     if snp_ref is not None:
@@ -142,6 +140,7 @@ def clean_bim(bimfile_input, snp_ref):
                     split_line[1] = snp_dict[split_line[1]]
 
         good_snpID_output_file.close()  # https://stackoverflow.com/questions/7395542/is-explicitly-closing-files-important
+
 
 #
 # bimfile_input = '/homes/hwheeler/Data/example_PLINK_files/dataset1.bim'

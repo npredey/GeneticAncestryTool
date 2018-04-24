@@ -24,10 +24,12 @@ def call_plink(plink_args, command_key=''):
     print()
     plink_command = 'plink '
     for arg, arg_value in plink_args.items():
-        # print(arg, arg_value)
+        if 'n' == arg:
+            continue
         # argument_value = getattr(plink_args, arg)
         if arg_value is not None:
             if arg_value != '':
+                print('arg', arg)
                 if 'bmerge' == arg:
                     arg_value = list(get_bed_bim_fam_from_bfile(arg_value).values())
                     # print(arg_value)

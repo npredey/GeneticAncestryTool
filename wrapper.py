@@ -33,7 +33,8 @@ def application():
     parser.add_argument('--out', help='Specify output root filename.', type=str, required=True)
     parser.add_argument('--snp-ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
     parser.add_argument('--noweb', help='PLINK arg to run without the internet.', action='store_true')
-    # parser.add_argument('--num-rsid', help='Flag for extracting a set amount of rsIDs from the dataset')
+    parser.add_argument('--n', help='Flag for extracting a set amount of rsIDs from the dataset. Use if the files are '
+                                    'large or for benchmarking/testing purposes.', type=int)
 
     args = parser.parse_args()
 
@@ -48,9 +49,12 @@ def application():
     input_binary_files = get_bed_bim_fam_from_bfile(args.bfile)
     # print(input_binary_files)
 
+    if args.snp_ref:
+        print('swapping')
+
     logging.log(logging.INFO, "Extracting only rsID's from [ {} ] files\n".format(args.bfile))
-    bfile_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bfile)
-    bmerge_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bmerge)
+    bfile_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bfile, args.n)
+    bmerge_only_rsID = parsing_plink.get_rsIDs_from_dataset(args.bmerge, args.n)
 
     only_rsID_binary_files = get_bed_bim_fam_from_bfile(bfile_only_rsID)
     logging.log(logging.INFO, "Cleaning bim file {}.bim\n".format(args.bfile))
