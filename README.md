@@ -58,9 +58,9 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
     ~~~
     plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed plink --bfile newoutputname --pca
     ~~~
-    * PCA gives the output files plink.eigenvec and plink.eigenval. The plink.eigenvec file is run through a python 
-    script to add the population information of the individuals to the plink.eigenvec file. 
-    * A new *.eigenvec file is generated and it includes the population information. This new file is then plotted in 
+    * PCA gives the output files `plink.eigenvec` and `plink.eigenval`. The `plink.eigenvec` file is run through a python 
+    script to add the population information of the individuals to the `plink.eigenvec` file. 
+    * A new `*.eigenvec` file is generated and it includes the population information. This new file is then plotted in 
     python to generate the final PCA Plot output. 
     
 * `util.py`
