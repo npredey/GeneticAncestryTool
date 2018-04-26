@@ -52,11 +52,13 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
     * Merged files are run in plink with the following commands to run PCA, with ld pruning is done prior to running 
     PCA:
     ~~~
-    plink --bfile nameoffiles --maf 0.05 --make-bed plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
+    plink --bfile nameoffiles --maf 0.05 --make-bed 
+    plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
+    plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed 
     ~~~
     * This is followed by performing Principal Component Analysis (PCA) on the data:
     ~~~
-    plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed plink --bfile newoutputname --pca
+    plink --bfile newoutputname --pca
     ~~~
     * PCA gives the output files `plink.eigenvec` and `plink.eigenval`. The `plink.eigenvec` file is run through a python 
     script to add the population information of the individuals to the `plink.eigenvec` file. 
