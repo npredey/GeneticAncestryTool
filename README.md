@@ -9,10 +9,7 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * **[Python 3+](https://www.python.org/downloads/)**
     * Developed using 3.6.3, but should work on anything after about 3.4.
 * **[PLINK](http://zzz.bwh.harvard.edu/plink/)**
-* **EIGENSTRAT (A specific software tool within a larger package, EIGENSOFT) [Download](https://data.broadinstitute.org/alkesgroup/EIGENSOFT/),
- [Code/Examples/Docs](https://github.com/DReichLab/EIG/tree/master/EIGENSTRAT)** 
-    * **NOTE: EIGENSTRAT is for Linux only. If you run the application and use EIGENSTRAT, it must be on a Linux 
-    machine**
+
 
 ## Main Application Parameters
 * `--bfile` _Specify .bed, .bim and .fam._ [Example](http://zzz.bwh.harvard.edu/plink/data.shtml#bed)
@@ -21,6 +18,9 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * `--out` _Specify output root filename._ [Example](http://zzz.bwh.harvard.edu/plink/data.shtml#plink)
 * `--snp_ref` _Specify snp reference file to convert data from SNP IDs to rsIDs._
 * `--noweb` _Run PLINK without the internet._ [Example](http://zzz.bwh.harvard.edu/plink/binary.shtml)
+* `--maf` _Runs minor allele frequency pruning on file prior to PCA_ [Example](http://zzz.bwh.harvard.edu/plink/thresh.shtml)
+* `--indep-pairwise` _Runs LD pruning on file prior to PCA_ [Example](http://zzz.bwh.harvard.edu/plink/summary.shtml)
+* `--pca` _Runs Principal Component Analysis on file_ [Example](https://www.cog-genomics.org/plink/1.9/strat)
 
 # Importing 
 To import the project from GitHub, open a terminal session and type only one of either of these commands in the 
@@ -49,7 +49,19 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
     * Extracts rsID's from the input files after the merging of the `.log` and `.missnp`. This is outputted to 
     intermediary files (`*.bed`, `*.bim`, and `*.fam`).
     * Once the input data files are thoroughly inspected, a final merge is run.
-    * KAVINA'S PART
+    * Merged files are run in plink with the following commands to run PCA, pruning is done prior to running PCA:
+
+    ~~~
+    plink --bfile nameoffiles --maf 0.05 --make-bed plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
+    ~~~
+    * This is followed by performing Principal Component Analysis (PCA) on the data:
+    ~~~
+    plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed plink --bfile newoutputname --pca
+    ~~~
+    * PCA gives the output files plink.eigenvec and plink.eigenval. The plink.eigenvec file is run through a python 
+    script to add the population information of the individuals to the plink.eigenvec file. 
+    * A new *.eigenvec file is generated and it includes the population information. This new file is then plotted in 
+    python to generate the final PCA Plot output. 
     
 * `util.py`
     * Utility script that holds common methods between the various scripts.
@@ -92,4 +104,7 @@ merged_sample_data.nosex
 * Like the example above, the ouput of the files will include:
     * `.bed`, `.bim`, `.fam` files of the following datasets:
         * Genotype and HapMap data with only rs ID's (.."_RS_ONLY")
-        * 
+* PCA Plot from Principal Component Analysis 
+    * PCA Plot output maps genetic ancestry of subpopulations in comparison to one another. PCA plot depicts how closely related specific subpopulations are to one another regarding a specific trait. 
+
+
