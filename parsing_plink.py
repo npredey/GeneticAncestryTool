@@ -31,9 +31,6 @@ def merge_log_to_missnp(output_file):
         missing_missnp_file = True
         print('.missnp file [ {} ] does not exist. Excluding from merge...'.format(input_missnp))
 
-    # missnpfile.write('\n')
-    # A good way to test this code is to call these functions within this file with hardcoded file paths for the time
-    # being.
     try:
         with open(input_logfile, 'r') as logfile_in:
             for line in logfile_in:
@@ -58,7 +55,7 @@ def merge_log_to_missnp(output_file):
         return merged_missnp_output
 
 
-def get_rsIDs_from_dataset(dataset, num_rsids):
+def get_rsIDs_from_dataset(dataset, num_rsids=0):
     """
     Removes '.' from the binary file input.
     :param num_rsids: The number of rsids to extract from the datasets

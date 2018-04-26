@@ -5,17 +5,6 @@ from util import *
 import logging
 
 
-# def call_plink(commandline_args):
-#     """
-#     Given an arg parse argument object, parse the plink commands specified. For example, if you want to do a
-#     `bmerge`, this function will handle that according to plink. This function may be useless the more I think about
-#     it. It might become useful if we have to run eigenstrat from the command line. Not totally sure yet.
-#     :param commandline_args:
-#     """
-#     if commandline_args['bmerge'] is not None:
-#         call_plink(commandline_args, 'performing merge')
-
-
 def application():
     """
     The starting point for the GeneticAncestryTool.
