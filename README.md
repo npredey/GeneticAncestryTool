@@ -9,6 +9,9 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * **[Python 3+](https://www.python.org/downloads/)**
     * Developed using 3.6.3, but should work on anything after about 3.4.
 * **[PLINK](http://zzz.bwh.harvard.edu/plink/)**
+* **[Matplotlib](https://matplotlib.org/)**
+* **[Pandas](https://pandas.pydata.org/)**
+* **[NumPy](http://www.numpy.org/)**
 
 
 ## Main Application Parameters
