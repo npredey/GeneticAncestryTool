@@ -49,8 +49,8 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
     * Extracts rsID's from the input files after the merging of the `.log` and `.missnp`. This is outputted to 
     intermediary files (`*.bed`, `*.bim`, and `*.fam`).
     * Once the input data files are thoroughly inspected, a final merge is run.
-    * Merged files are run in plink with the following commands to run PCA, pruning is done prior to running PCA:
-
+    * Merged files are run in plink with the following commands to run PCA, with ld pruning is done prior to running 
+    PCA:
     ~~~
     plink --bfile nameoffiles --maf 0.05 --make-bed plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
     ~~~
