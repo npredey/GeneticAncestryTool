@@ -26,7 +26,7 @@ def application():
                                     'large or for benchmarking/testing purposes.', type=int)
 
     args = parser.parse_args()
-
+    ORIGINAL_BFILE = args.bfile
     input_root_dir = get_root_path(args.bfile)
     if len(sys.argv) == 1:
         print(parser.print_help())
@@ -89,3 +89,44 @@ def application():
         }
         call_plink(final_merge_args, 'Performing final merge of dataset [ {} ] and HapMap [ {} ].'.format(args.bfile,
                                                                                                           args.bmerge))
+    merged_file_name = args.out
+
+    # plink --bfile nameoffiles --maf 0.05 --make-bed
+
+    merged_file_name_aftermaf = '{}_MAF'.format(merged_file_name)
+    maf_args = {
+        'bfile': args.out,
+        'maf': '0.05',
+        'out': merged_file_name_aftermaf,
+    }
+    call_plink(maf_args, command_key='Running multiple allele frequency on dataset [ {} ]'.format(merged_file_name))
+
+    # plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
+
+    after_maf_ld_pruning = '{}_PRUNED'.format(merged_file_name_aftermaf)
+    ld_prune_args = {
+        'bfile': merged_file_name_aftermaf,
+        'indep-pairwise': '50 5 0.3',
+        'out': after_maf_ld_pruning
+    }
+    call_plink(after_maf_ld_pruning, command_key='Running LD Pruning on dataset [ {} ]'.format(merged_file_name_aftermaf))
+    # plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed
+    # after_prune_pca = '{}_PCA'.format(ORIGINAL_BFILE)
+    extracted_pruned = '{}_EXTRACT'.format(args.out)
+    prune_in_file = '{}.prune.in'.format(after_maf_ld_pruning)
+    extract_args = {
+        'bfile': after_maf_ld_pruning,
+        'extract': prune_in_file,
+        'out': extracted_pruned
+    }
+    call_plink(extract_args, command_key='Extracting pruned data from dataset [ {} ]'.format(args.bfile))
+
+    # plink --bfile extracted_file --pca --out pca_file
+
+    pca_file = '{}_PCA'.format(ORIGINAL_BFILE)
+    extract_args = {
+        'bfile': extracted_pruned,
+        'pca': '',
+        'out': pca_file
+    }
+    call_plink(extract_args, command_key='Running PCA on dataset [ {} ]'.format(extracted_pruned))

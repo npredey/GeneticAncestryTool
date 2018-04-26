@@ -1,4 +1,8 @@
 import re
+import matplotlib.pyplot as plt
+import pandas as pd
+from matplotlib.ticker import MaxNLocator
+import numpy as np
 
 
 def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
@@ -38,6 +42,46 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
             if line_split[1] in population_dict.keys():
                 line_split.append(population_dict[line_split[1]])
                 eigenvec_out.write(' '.join(line_split) + '\n')
+
+
+def plot_components(eigenvec_file):
+    PCA_1_INDEX = 2
+    PCA_2_INDEX = 3
+
+    labels = ('Population', 'PCA1', 'PCA2')
+    plot_components = list()
+    components_list = list()
+    unique_populations = set()
+
+    with open(eigenvec_file, 'r') as comp_input:
+        for line in comp_input.readlines():
+            line = line.strip()
+            line_split = line.split(' ')
+            population = line_split[-1]
+            unique_populations.add(population)
+            pca1 = line_split[PCA_1_INDEX]
+            pca2 = line_split[PCA_2_INDEX]
+            plot_components.append((population, pca1, pca2))
+            components_dict = {'Population': population, 'PCA1': pca1, 'PCA2': pca2}
+            components_list.append(components_dict)
+
+    df = pd.DataFrame(components_list, columns=['Population', 'PCA1', 'PCA2'])
+
+    groups = df.groupby(['Population'])
+    locator = MaxNLocator(prune='both', nbins=2)
+
+    fig, ax = plt.subplots()
+    ax.yaxis.set_major_locator(locator)
+    ax.xaxis.set_major_locator(locator)
+
+    cmap = plt.cm.get_cmap(plt.cm.viridis, 143)
+    n = 16
+    i = 1
+    # new_cmap = rand_cmap(100, type='bright', first_color_black=True, last_color_black=False, verbose=True)
+
+    for name, group in groups:
+        ax.plot(group.PCA1, group.PCA2, c=cmap(n * i), marker='o', linestyle='', ms=3, label=name)
+        i += 1
 
 
 def rand_cmap(nlabels, type='bright', first_color_black=True, last_color_black=False, verbose=True):

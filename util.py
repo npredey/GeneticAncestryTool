@@ -49,6 +49,8 @@ def call_plink(plink_args, command_key=''):
         print(logging.exception("Error running plink while [ {} ]".format(command_key)))
         print(e.output)
 
+    return plink_args['out']
+
 
 def validate_wrapper_args(args, parent_dir):
     if args.bfile == 'sample_data/dataset_sample' and ''.join(args.bmerge) == 'sample_data/hapmap_sample':
