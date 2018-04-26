@@ -31,6 +31,8 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
 ~~~
 
 # Scripts 
+* `pca.py`
+    * Contains methods for plotting principal components and generating `*.eigenvec` files for a dataset.
 * `parsing_plink.py`
     * Contains methods to perform the following actions:
         * Merging `*.log` and `*.missnp` files.
