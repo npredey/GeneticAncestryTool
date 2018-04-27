@@ -56,4 +56,5 @@ def plot_components(eigenvec_file):
     try:
         subprocess.check_output(r_command)
     except FileNotFoundError:
-        print('Error running the plotting script. Please see README for instructions on generating the plot.')
+        print('Error running the plotting script [ {} ]. Please see README for instructions on generating the '
+              'plot.'.format(r_command))
