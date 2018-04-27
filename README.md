@@ -142,6 +142,10 @@ merged_sample_data_MAF_EXTRACT.log
 merged_sample_data_MAF_EXTRACT.nosex
 merged_sample_data_MERGED_LOG_MISSNP.txt
 ~~~
+* Running the command below will generate the plot for the sample. Passing the final eigenvec file will create the plot.
+~~~
+Rscript --vanilla plotting.R sample_data/dataset_sample_PCA_PLOT_DATA.eigenvec
+~~~
 * Explanation of files:
     * `_RS_ONLY` contains the original datasets with only rsID's
     * `_exc_missnp_log` are files excluding the merged `missnp` and `log` files.
