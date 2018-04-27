@@ -51,6 +51,9 @@ def plot_components(eigenvec_file):
     """
     # For some reason, I get a FileNotFoundError, even when I provide the full paths to the Rscript executable and
     # the files in question. Please see the README for the time being on how to generate the plot.
-    # r_command = 'Rscript --vanilla plotting.R {}'.format(eigenvec_file, shell=True)
+    r_command = 'Rscript --vanilla plotting.R {}'.format(eigenvec_file, shell=True)
     # r_command = '/anaconda3/bin/Rscript --vanilla /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/plotting.R /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/sample_data/dataset_sample_PCA_PLOT_DATA.eigenvec'
-    subprocess.check_output(r_command)
+    try:
+        subprocess.check_output(r_command)
+    except FileNotFoundError:
+        print('Error running the plotting script. Please see README for instructions on generating the plot.')
