@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/usr/bin/R
 args = commandArgs(trailingOnly=TRUE)
 
 if (length(args)==0) {

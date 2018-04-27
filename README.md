@@ -143,6 +143,7 @@ merged_sample_data_MAF_EXTRACT.nosex
 merged_sample_data_MERGED_LOG_MISSNP.txt
 ~~~
 * Running the command below will generate the plot for the sample. Passing the final eigenvec file will create the plot.
+* We don't need to do this because we are using `os.system` instead of `subprocess`.
 ~~~
 Rscript --vanilla plotting.R sample_data/dataset_sample_PCA_PLOT_DATA.eigenvec
 ~~~

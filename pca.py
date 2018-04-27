@@ -1,5 +1,6 @@
 import re
 import subprocess
+import os
 
 
 def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
@@ -36,7 +37,7 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
             line_split = re.split(' ', line.strip())
             # print(line_split)
             # info = line.split('\t')
-            if line_split[1] in population_dict.keys(): # check that it is in the dictionary of populations, if not,
+            if line_split[1] in population_dict.keys():  # check that it is in the dictionary of populations, if not,
                 # it is GWAS data
                 line_split.append(population_dict[line_split[1]])
                 eigenvec_out.write(' '.join(line_split) + '\n')
@@ -50,12 +51,9 @@ def plot_components(eigenvec_file):
     Function to call R script to plot the data.
     :param eigenvec_file: The .eigenvec file that holds the components with population.
     """
-    # For some reason, I get a FileNotFoundError, even when I provide the full paths to the Rscript executable and
-    # the files in question. Please see the README for the time being on how to generate the plot.
-    r_command = 'Rscript --vanilla plotting.R {}'.format(eigenvec_file, shell=True)
-    # r_command = '/anaconda3/bin/Rscript --vanilla /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/plotting.R /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/sample_data/dataset_sample_PCA_PLOT_DATA.eigenvec'
+    r_command = 'R --vanilla < plotting.R --args {}'.format(eigenvec_file)
     try:
-        subprocess.check_output(r_command)
+        os.system(r_command)
     except FileNotFoundError:
         print('Error running the plotting script [ {} ]. Please see README for instructions on generating the '
               'plot.'.format(r_command))
