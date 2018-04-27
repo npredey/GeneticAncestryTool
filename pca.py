@@ -42,6 +42,9 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
             if line_split[1] in population_dict.keys():
                 line_split.append(population_dict[line_split[1]])
                 eigenvec_out.write(' '.join(line_split) + '\n')
+            else:
+                line_split.append("GWAS")
+                eigenvec_out.write(' '.join(line_split) + '\n')
 
 
 def plot_components(eigenvec_file):
