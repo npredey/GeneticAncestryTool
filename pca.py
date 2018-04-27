@@ -1,5 +1,6 @@
 import re
 import subprocess
+import rpy2.robjects as robjects
 
 
 def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
@@ -49,5 +50,5 @@ def plot_components(eigenvec_file):
     Function to call R script to plot the data.
     :param eigenvec_file: The .eigenvec file that holds the components with population.
     """
-    r_command = './plotting.R {}'.format(eigenvec_file)
+    r_command = 'Rscript --vanilla /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/plotting.R {}'.format(eigenvec_file, shell=True)
     subprocess.check_output(r_command)
