@@ -33,7 +33,7 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
     with open(eigenvec_input_file, 'r') as eigenvec_in:
         eigenvec_in_data = eigenvec_in.readlines()
         
-    print (population_dict)
+
     #o=open("/homes/kmunshi/plink_output2.eigenvec", "w+")
     with open(eigenvec_output_name, 'w+') as eigenvec_out:
         for line in eigenvec_in_data:
