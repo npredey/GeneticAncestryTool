@@ -51,6 +51,7 @@ def application():
 
     args_dict['bfile'] = bfile_only_rsID
     args_dict['bmerge'] = bmerge_only_rsID
+    args_dict['allow-no-sex'] = ''
 
     call_plink(plink_args=args_dict, command_key='First Merge after clean and extracting rsIDs')
     inital_run_logfile = "{}.log".format(args.out)
