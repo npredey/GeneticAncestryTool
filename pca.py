@@ -36,7 +36,8 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
             line_split = re.split(' ', line.strip())
             # print(line_split)
             # info = line.split('\t')
-            if line_split[1] in population_dict.keys():
+            if line_split[1] in population_dict.keys(): # check that it is in the dictionary of populations, if not,
+                # it is GWAS data
                 line_split.append(population_dict[line_split[1]])
                 eigenvec_out.write(' '.join(line_split) + '\n')
             else:
