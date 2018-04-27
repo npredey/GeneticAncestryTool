@@ -1,6 +1,5 @@
 import re
 import subprocess
-import rpy2.robjects as robjects
 
 
 def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
