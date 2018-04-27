@@ -14,8 +14,8 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
     :param eigenvec_input_file: The eigenvec file used to create the PCA data.
     :rtype: object
     """
-    f = open("/homes/hwheeler/Data/1000_Genomes_Ref_hg19/20130606_g1k.ped", "r")
-    f = open(tg_ped_file, "r")
+    #f = open("/homes/hwheeler/Data/1000_Genomes_Ref_hg19/20130606_g1k.ped", "r")
+    #f = open(tg_ped_file, "r")
     with open(tg_ped_file, 'r') as tg_ped_in:
         tg_data = tg_ped_in.readlines()
     population_dict = dict()
@@ -29,11 +29,11 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
         # info=line.split('\t')
         population_dict[line_split[1]] = line_split[6]
 
-    e = open("/homes/kmunshi/plink.eigenvec", "r")
+    #e = open("/homes/kmunshi/plink.eigenvec", "r")
     with open(eigenvec_input_file, 'r') as eigenvec_in:
         eigenvec_in_data = eigenvec_in.readlines()
 
-    o=open("/homes/kmunshi/plink_output.eigenvec", "w+")
+   # o=open("/homes/kmunshi/plink_output.eigenvec", "w+")
     with open(eigenvec_output_name, 'w+') as eigenvec_out:
         for line in eigenvec_in_data:
             line_split = re.split(' ', line.strip())
