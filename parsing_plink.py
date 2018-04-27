@@ -74,7 +74,7 @@ def get_rsIDs_from_dataset(dataset, num_rsids=0):
         if num_rsids > 0:
             file_lines = file_lines[:num_rsids]
         for line in file_lines:
-            print(line)
+            # print(line)
             if '.' not in line and not line.startswith('MT'):
                 rs_id = re.search('rs[0-9]+', line)
                 if rs_id:

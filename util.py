@@ -18,7 +18,10 @@ def call_plink(plink_args, command_key=''):
     :param plink_args:
     """
     run_logging_string = 'Running PLINK command [ {} ] with args:'.format(command_key)
+    # make_bed_bool = 'indep-pairwise' in plink_args.keys() or 'pruned data' in command_key
+    make_bed_bool = 'indep-pairwise' in plink_args.keys() or 'PCA' in command_key
     print('\n', '*' * len(run_logging_string), '\n', run_logging_string)
+    print(plink_args)
     for key, value in plink_args.items():
         print('--' + key + ' =', value)
     print()
@@ -35,7 +38,7 @@ def call_plink(plink_args, command_key=''):
                     # print(arg_value)
                     arg_value.sort()
                     arg_value = ' '.join(arg_value)
-                elif 'bfile' == arg:
+                elif 'bfile' == arg and not make_bed_bool:
                     arg_value = '{} {}'.format(arg_value, '--make-bed')
                 arg_as_plink_flag = '--{} {} '.format(arg, arg_value)
                 plink_command += arg_as_plink_flag
