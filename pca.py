@@ -43,7 +43,7 @@ def create_pca_data(eigenvec_input_file, tg_ped_file, eigenvec_output_name):
                 line_split.append(population_dict[line_split[1]])
                 eigenvec_out.write(' '.join(line_split) + '\n')
             else:
-                line_split.append("GWAS")
+                line_split.append(" GWAS")
                 eigenvec_out.write(' '.join(line_split) + '\n')
 
 
