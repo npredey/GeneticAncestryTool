@@ -50,5 +50,5 @@ def plot_components(eigenvec_file):
     Function to call R script to plot the data.
     :param eigenvec_file: The .eigenvec file that holds the components with population.
     """
-    r_command = 'Rscript --vanilla /Users/nickpredey/Spring_2018/COMP383/FinalProject/GeneticAncestryTool/plotting.R {}'.format(eigenvec_file, shell=True)
+    r_command = 'Rscript --vanilla plotting.R {}'.format(eigenvec_file, shell=True)
     subprocess.check_output(r_command)
