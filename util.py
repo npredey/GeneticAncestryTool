@@ -63,8 +63,8 @@ def validate_wrapper_args(args, parent_dir):
 
     # if args.make_bed is not None:
     #     args.make_bed = ''
-    if args.noweb is not None:
-        args.noweb = ''
+    # if args.noweb is not None:
+    #     args.noweb = ''
     return args
 
 

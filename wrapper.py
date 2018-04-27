@@ -21,7 +21,7 @@ def application():
     # parser.add_argument('--make-bed', nargs='*', help='Make .bed, .fam and .bim.', type=bool)
     parser.add_argument('--out', help='Specify output root filename.', type=str, required=True)
     parser.add_argument('--snp-ref', help='Specify snp reference file to convert data from SNP IDs to rsIDs.', type=str)
-    parser.add_argument('--noweb', help='PLINK arg to run without the internet.', action='store_true')
+    # parser.add_argument('--noweb', help='PLINK arg to run without the internet.', action='store_true')
     parser.add_argument('--n', help='Flag for extracting a set amount of rsIDs from the dataset. Use if the files are '
                                     'large or for benchmarking/testing purposes.', type=int, default=0)
 
@@ -99,28 +99,32 @@ def application():
     maf_args = {
         'bfile': merged_file_name,
         'maf': '0.05',
-        'out': merged_file_name,
+        'out': merged_file_name_aftermaf,
     }
-    call_plink(maf_args, command_key='Running multiple allele frequency on dataset [ {} ]'.format(merged_file_name))
+    call_plink(maf_args, command_key='Running multiple allele frequency (MAF) on dataset [ {} ]'.format(
+        merged_file_name))
 
     # plink --bfile nameoffiles --indep-pairwise 50 5 0.3 --out outputname
 
-    after_maf_ld_pruning = '{}_PRUNED'.format(merged_file_name_aftermaf)
+    # after_maf_ld_pruning = '{}_PRUNED'.format(merged_file_name_aftermaf)
+    after_maf_file = maf_args['out']
     ld_prune_args = {
-        'bfile': merged_file_name,
+        'bfile': after_maf_file,
         'indep-pairwise': '50 5 0.3',
-        'out': merged_file_name
+        'out': after_maf_file
     }
-    call_plink(ld_prune_args, command_key='Running LD Pruning on dataset [ {} ]'.format(merged_file_name_aftermaf))
-    # plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname -make--bed
+    call_plink(ld_prune_args, command_key='Running LD Pruning on dataset [ {} ]'.format(after_maf_file))
+
+    # plink --bfile nameoffiles --extract outputname.prune.in --out newoutputname --make-bed
     # after_prune_pca = '{}_PCA'.format(ORIGINAL_BFILE)
     extracted_pruned = args.out
-    prune_in_file = '{}.prune.in'.format(args.out)
+    prune_in_file = '{}.prune.in'.format(after_maf_file)
+    extracted_file = '{}_EXTRACT'.format(after_maf_file)
 
     extract_args = {
-        'bfile': merged_file_name,
+        'bfile': after_maf_file,
         'extract': prune_in_file,
-        'out': merged_file_name
+        'out': extracted_file
     }
     call_plink(extract_args, command_key='Extracting pruned data from dataset [ {} ]'.format(args.bfile))
 
@@ -128,7 +132,7 @@ def application():
 
     pca_file = '{}_PCA'.format(ORIGINAL_BFILE)
     extract_args = {
-        'bfile': merged_file_name,
+        'bfile': extracted_file,
         'pca': '',
         'out': pca_file
     }
