@@ -3,6 +3,7 @@ import sys
 import parsing_plink
 from util import *
 import logging
+from pca import *
 
 
 def application():
@@ -137,3 +138,13 @@ def application():
         'out': pca_file
     }
     call_plink(extract_args, command_key='Running PCA on dataset [ {} ]'.format(extracted_pruned))
+
+    # Preparing data for plotting
+    tg_ped_file = '20130606_g1k.ped'
+    input_eigenvec_file = '{}.eigenvec'.format(pca_file)
+    output_eigenvec_file = '{}_PLOT_DATA.eigenvec'.format(pca_file)
+
+    create_pca_data(input_eigenvec_file, tg_ped_file, output_eigenvec_file)
+
+    plot_components(output_eigenvec_file)
+

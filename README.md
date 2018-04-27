@@ -8,10 +8,8 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * **Linux/Unix**
 * **[Python 3+](https://www.python.org/downloads/)**
     * Developed using 3.6.3, but should work on anything after about 3.4.
-* **[PLINK](http://zzz.bwh.harvard.edu/plink/)**
-* **[Matplotlib](https://matplotlib.org/)**
-* **[Pandas](https://pandas.pydata.org/)**
-* **[NumPy](http://www.numpy.org/)**
+* **[PLINK](http://zzz.bwh.harvard.edu/plink/) 1.9**
+* **[R](https://www.r-project.org/) 3.5.0**
 
 
 ## Main Application Parameters
@@ -20,7 +18,10 @@ This automation is done using a python wrapper around PLINK and EIGENSTRAT (link
 * `--make-bed` _Make .bed, .fam and .bim. **(ON HOLD)**_ [Example](http://zzz.bwh.harvard.edu/plink/data.shtml#bed)
 * `--out` _Specify output root filename._ [Example](http://zzz.bwh.harvard.edu/plink/data.shtml#plink)
 * `--snp_ref` _Specify snp reference file to convert data from SNP IDs to rsIDs._
-* `--noweb` _Run PLINK without the internet._ [Example](http://zzz.bwh.harvard.edu/plink/binary.shtml)
+* `--noweb` _Run PLINK without the internet. (For testing; inactive)_ [Example](http://zzz.bwh.harvard.edu/plink/binary
+.shtml)
+* `--n` _Flag for extracting a set amount of rsIDs from the dataset. Use if the files are large or for benchmarking/testing purposes.'_
+## PLINK specific commands
 * `--maf` _Runs minor allele frequency pruning on file prior to PCA_ [Example](http://zzz.bwh.harvard.edu/plink/thresh.shtml)
 * `--indep-pairwise` _Runs LD pruning on file prior to PCA_ [Example](http://zzz.bwh.harvard.edu/plink/summary.shtml)
 * `--pca` _Runs Principal Component Analysis on file_ [Example](https://www.cog-genomics.org/plink/1.9/strat)
@@ -67,12 +68,22 @@ git fork https://github.com/npredey/GeneticAncestryTool.git
     ~~~
     * PCA gives the output files `plink.eigenvec` and `plink.eigenval`. The `plink.eigenvec` file is run through a python 
     script to add the population information of the individuals to the `plink.eigenvec` file. 
-    * A new `*.eigenvec` file is generated and it includes the population information. This new file is then plotted in 
-    python to generate the final PCA Plot output. 
+    * A new `*.eigenvec` file is generated and it includes the population information and iid's. 
+    * The R script `plotting.R` plots the final `.eigenvec` file and outputs it in the top level directory as `Rplots
+    .pdf`.
     
 * `util.py`
     * Utility script that holds common methods between the various scripts.
+* `pca.py`
+    * Contains method to get the population information and iid's from the static `.ped` file that we will add to the
+     `.eigenvec` file that is generated after running PCA in PLINK.
+    * Calls the R script that is used for plotting.
 
+## Other Files
+* `20130606_g1k.ped`
+    * The pedigree file that contains the Individual ID's (iid's) and the population information to aid in plotting 
+    the final `.eigenvec` file. That is, we determine the population, if it exists, from this file and will color our
+     data based on that.
 # Input Data
 ## `*.bed`, `*.bim`, and `*.fam` Files
 * Place the genotype and HapMap data together in the same directory. Intermediary files will be created, so it is 
@@ -89,29 +100,59 @@ explanation.
 ~~~
 * Once the run is finished, the directory `sample_data/` should now be:
 ~~~
-dataset_sample.bed
-dataset_sample.bim
-dataset_sample.fam
+dataset_sample_PCA.eigenval
+dataset_sample_PCA.eigenvec
+dataset_sample_PCA.log
+dataset_sample_PCA.nosex
+dataset_sample_PCA_PLOT_DATA.eigenvec
 dataset_sample_RS_ONLY.bed
 dataset_sample_RS_ONLY.bim
 dataset_sample_RS_ONLY.fam
 dataset_sample_RS_ONLY.log
 dataset_sample_RS_ONLY.nosex
-hapmap_sample.bed
-hapmap_sample.bim
-hapmap_sample.fam
+dataset_sample_RS_ONLY_exc_missnp_log.bed
+dataset_sample_RS_ONLY_exc_missnp_log.bim
+dataset_sample_RS_ONLY_exc_missnp_log.fam
+dataset_sample_RS_ONLY_exc_missnp_log.log
+dataset_sample_RS_ONLY_exc_missnp_log.nosex
+hapmap_sample_RS_ONLY.bed
+hapmap_sample_RS_ONLY.bim
+hapmap_sample_RS_ONLY.fam
+hapmap_sample_RS_ONLY.log
+hapmap_sample_RS_ONLY_exc_missnp_log.bed
+hapmap_sample_RS_ONLY_exc_missnp_log.bim
+hapmap_sample_RS_ONLY_exc_missnp_log.fam
+hapmap_sample_RS_ONLY_exc_missnp_log.log
 merged_sample_data.bed
 merged_sample_data.bim
 merged_sample_data.fam
 merged_sample_data.log
 merged_sample_data.nosex
+merged_sample_data_MAF.bed
+merged_sample_data_MAF.bim
+merged_sample_data_MAF.fam
+merged_sample_data_MAF.log
+merged_sample_data_MAF.nosex
+merged_sample_data_MAF.prune.in
+merged_sample_data_MAF.prune.out
+merged_sample_data_MAF_EXTRACT.bed
+merged_sample_data_MAF_EXTRACT.bim
+merged_sample_data_MAF_EXTRACT.fam
+merged_sample_data_MAF_EXTRACT.log
+merged_sample_data_MAF_EXTRACT.nosex
+merged_sample_data_MERGED_LOG_MISSNP.txt
 ~~~
-
+* Explanation of files:
+    * `_RS_ONLY` contains the original datasets with only rsID's
+    * `_exc_missnp_log` are files excluding the merged `missnp` and `log` files.
+    * `_MAF` are files that have been pruned with the `--maf` PLINK argument
+    * `_MAF_EXTRACT` files have the `prune.in` files removed after the MAF.
+    * `_PCA` is the data after running principal component analysis
+    * `_PCA_PLOT_DATA` is data for the R script to plot the Principal Components.
 ## Output Files
-* Like the example above, the ouput of the files will include:
-    * `.bed`, `.bim`, `.fam` files of the following datasets:
-        * Genotype and HapMap data with only rs ID's (.."_RS_ONLY")
+* Files with structure that resemble those from above.
 * PCA Plot from Principal Component Analysis 
-    * PCA Plot output maps genetic ancestry of subpopulations in comparison to one another. PCA plot depicts how closely related specific subpopulations are to one another regarding a specific trait. 
+    * PCA Plot output maps genetic ancestry of subpopulations in comparison to one another. PCA plot depicts how closely related specific subpopulations are to one another regarding a specific trait.
+    * The PCA plot is outputted as `Rplots.pdf` in the top level directory of the program. 
 
 
